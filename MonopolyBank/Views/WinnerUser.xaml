@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MonopolyBank.Views.WinnerUser"
+             BackgroundColor="Transparent"
+             Title="WinnerUser">
+
+    <Grid>
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnBackdropTapped" />
+        </Grid.GestureRecognizers>
+
+        <Border VerticalOptions="Center"
+                HorizontalOptions="Fill"
+                Margin="22"
+                BackgroundColor="White"
+                StrokeShape="{RoundRectangle CornerRadius=20}"
+                Padding="0"
+                StrokeThickness="0">
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="0,8" Radius="20" Opacity="0.4"/>
+            </Border.Shadow>
+
+            <Grid RowDefinitions="44,Auto" Padding="0,0,0,25">
+                <!-- Header with dark blue gradient matching PopUpGameOver & original screenshot -->
+                <Border Grid.Row="0"
+                        HeightRequest="44"
+                        StrokeShape="{RoundRectangle CornerRadius='20,20,0,0'}"
+                        StrokeThickness="0">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#27283d" Offset="0.1" />
+                            <GradientStop Color="#575a89" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Label Text="Победа"
+                           FontSize="20"
+                           TextColor="White"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"/>
+                </Border>
+
+                <!-- Monopoly Win Illustration -->
+                <Image Grid.Row="1"
+                       Source="win.png"
+                       Margin="0, 35, 0, 15"
+                       WidthRequest="230"
+                       Aspect="AspectFit"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+            </Grid>
+        </Border>
+    </Grid>
+
+</ContentPage>

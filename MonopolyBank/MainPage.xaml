@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MonopolyBank.MainPage"
+             BackgroundColor="#0e1017"
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="*,Auto">
+        <VerticalStackLayout Grid.Row="0"
+                             Padding="30, 40, 30, 20" 
+                             Spacing="24" 
+                             HorizontalOptions="Fill" 
+                             VerticalOptions="Center">
+            
+            <Image Source="bank_monopoly_logo.png" 
+                   HeightRequest="160" 
+                   Aspect="AspectFit"/>
+
+            <Label Text="МОНОПОЛИЯ БАНК" 
+                   FontSize="24" 
+                   FontAttributes="Bold" 
+                   TextColor="White" 
+                   HorizontalOptions="Center"
+                   CharacterSpacing="2"/>
+
+            <VerticalStackLayout Spacing="16" Margin="0, 16, 0, 0">
+                <Button x:Name="BtnNewGame" 
+                        Text="Создать новую игру" 
+                        Clicked="OnStartNewGame" 
+                        HeightRequest="52"
+                        CornerRadius="14"
+                        TextColor="White"
+                        FontSize="16"
+                        FontAttributes="Bold">
+                    <Button.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#fd6244" Offset="0.0" />
+                            <GradientStop Color="#e73d60" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Button.Background>
+                    <Button.Shadow>
+                        <Shadow Brush="#e73d60" Offset="0,4" Radius="12" Opacity="0.4" />
+                    </Button.Shadow>
+                </Button>
+
+                <Button x:Name="BtnJoinGame"
+                        Text="Присоединиться к игре"
+                        Clicked="OnJoinNewGame"
+                        HeightRequest="52"
+                        CornerRadius="14"
+                        TextColor="White"
+                        FontSize="16"
+                        FontAttributes="Bold">   
+                    <Button.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#019dce" Offset="0.0" />
+                            <GradientStop Color="#0daaa3" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Button.Background>
+                    <Button.Shadow>
+                        <Shadow Brush="#0daaa3" Offset="0,4" Radius="12" Opacity="0.4" />
+                    </Button.Shadow>
+                </Button>
+
+                <Button x:Name="BtnEditor"
+                        Text="🎨 Редактор монополий"
+                        Clicked="OnOpenEditorClicked"
+                        HeightRequest="52"
+                        CornerRadius="14"
+                        TextColor="White"
+                        FontSize="16"
+                        FontAttributes="Bold">
+                    <Button.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#8e2de2" Offset="0.0" />
+                            <GradientStop Color="#4a00e0" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Button.Background>
+                    <Button.Shadow>
+                        <Shadow Brush="#4a00e0" Offset="0,4" Radius="12" Opacity="0.4" />
+                    </Button.Shadow>
+                </Button>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+
+        <Image Grid.Row="1"
+               Source="city.png"
+               Aspect="AspectFill"
+               HeightRequest="160"
+               HorizontalOptions="Fill" />
+    </Grid>
+</ContentPage>

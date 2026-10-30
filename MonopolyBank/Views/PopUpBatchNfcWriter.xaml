@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MonopolyBank.Views.PopUpBatchNfcWriter"
+             BackgroundColor="#80000000">
+
+    <Grid>
+        <Border VerticalOptions="Center"
+                HorizontalOptions="Center"
+                WidthRequest="320"
+                BackgroundColor="#161822"
+                StrokeShape="{RoundRectangle CornerRadius=22}"
+                Padding="20"
+                StrokeThickness="0">
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="4,10" Radius="25" Opacity="0.5"/>
+            </Border.Shadow>
+
+            <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label Text="ЭКСПРЕСС-ПРОШИВКА"
+                           TextColor="White"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center" />
+                    <Button Grid.Column="1"
+                            Text="✕"
+                            TextColor="#999"
+                            BackgroundColor="Transparent"
+                            FontSize="18"
+                            Clicked="OnCancelClicked" />
+                </Grid>
+
+                <Label x:Name="StepLabel"
+                       Text="Карточка 1 из 28"
+                       TextColor="#888"
+                       FontSize="12"
+                       HorizontalOptions="Center" />
+
+                <Border x:Name="CompanyBorder"
+                        StrokeShape="{RoundRectangle CornerRadius=14}"
+                        BackgroundColor="#27283d"
+                        Padding="14,12"
+                        StrokeThickness="0"
+                        HorizontalOptions="Fill">
+                    <VerticalStackLayout Spacing="4">
+                        <Label x:Name="CompanyNameLabel"
+                               Text="Название карточки"
+                               TextColor="White"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center" />
+                        <Label x:Name="CompanyPriceLabel"
+                               Text="Цена: 500 $"
+                               TextColor="#ffe828"
+                               FontSize="13"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label x:Name="InstructionLabel"
+                       Text="👉 Приложите метку для этой карточки"
+                       TextColor="#0daaa3"
+                       FontSize="13"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"
+                       HorizontalOptions="Center" />
+
+                <ProgressBar x:Name="BatchProgress"
+                             Progress="0.1"
+                             ProgressColor="#0daaa3"
+                             HeightRequest="6"
+                             HorizontalOptions="Fill" />
+
+                <Button Text="Пропустить эту карточку ➔"
+                        TextColor="#aaa"
+                        BackgroundColor="#222533"
+                        FontSize="12"
+                        FontAttributes="Bold"
+                        HeightRequest="36"
+                        CornerRadius="10"
+                        Clicked="OnSkipClicked" />
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+
+</ContentPage>

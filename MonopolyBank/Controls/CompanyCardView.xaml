@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:MonopolyBank.Models"
+             x:Class="MonopolyBank.Controls.CompanyCardView"
+             x:DataType="models:Company">
+
+    <Border WidthRequest="190"
+            HeightRequest="275"
+            StrokeShape="{RoundRectangle CornerRadius=20}"
+            StrokeThickness="0"
+            Padding="0">
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#27283d" Offset="0.1" />
+                <GradientStop Color="#575a89" Offset="1.0" />
+            </LinearGradientBrush>
+        </Border.Background>
+        <Border.Shadow>
+            <Shadow Brush="Black" Offset="4,8" Radius="15" Opacity="0.5" />
+        </Border.Shadow>
+
+        <Grid>
+            <!-- 1. NFC Placeholder Card (IsNoEmty == false) -->
+            <Grid IsVisible="{Binding IsEmpty}"
+                  RowDefinitions="*,Auto,Auto,*"
+                  Padding="14,16">
+                <Image Grid.Row="0"
+                       Source="nfc_logo.png"
+                       HeightRequest="85"
+                       WidthRequest="130"
+                       Aspect="AspectFit"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+                <Label Grid.Row="1"
+                       Text="NFC"
+                       TextColor="White"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       Margin="0,6,0,2" />
+                <Label Grid.Row="2"
+                       Text="Для добвления компании и её покупки приложите карту собственности к телефону"
+                       TextColor="#E0E0F0"
+                       FontSize="11"
+                       HorizontalTextAlignment="Center"
+                       HorizontalOptions="Center"
+                       Margin="2,4,2,0" />
+            </Grid>
+
+            <!-- 2. Physical Monopoly Deed Card (IsNoEmty == true) -->
+            <Grid IsVisible="{Binding IsNoEmty}"
+                  RowDefinitions="26,1,24,1,Auto,Auto,1,Auto,*"
+                  Padding="0,0,0,6">
+
+                <!-- Header Color Banner -->
+                <Border Grid.Row="0"
+                        BackgroundColor="{Binding color}"
+                        StrokeShape="{RoundRectangle CornerRadius='20,20,0,0'}"
+                        StrokeThickness="0"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Fill">
+                    <Label Text="Документ собственности"
+                           TextColor="White"
+                           FontSize="9"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                </Border>
+
+                <!-- Separator -->
+                <BoxView Grid.Row="1" BackgroundColor="White" HeightRequest="1" HorizontalOptions="Fill" />
+
+                <!-- Company Name in Serif / Times New Roman -->
+                <Label Grid.Row="2"
+                       Text="{Binding Name}"
+                       TextColor="White"
+                       FontFamily="Times New Roman"
+                       FontAttributes="Bold"
+                       FontSize="11"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       LineBreakMode="TailTruncation"
+                       Margin="4,0" />
+
+                <!-- Separator -->
+                <BoxView Grid.Row="3" BackgroundColor="White" HeightRequest="1" HorizontalOptions="Fill" />
+
+                <!-- Rents Table -->
+                <VerticalStackLayout Grid.Row="4" Spacing="1" Padding="10,2,10,2">
+                    <Label Text="Арендная плата:"
+                           TextColor="White"
+                           FontAttributes="Bold"
+                           FontSize="8.5"
+                           Margin="0,0,0,1" />
+
+                    <!-- Rent 0 -->
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" IsVisible="{Binding IsCompany}" Text="Только фирма" TextColor="White" FontSize="8" />
+                        <Label Grid.Column="0" IsVisible="{Binding IsCorp}" Text="Одно предприятие" TextColor="White" FontSize="8" />
+                        <Label Grid.Column="1" Text="{Binding Orend[0]}" TextColor="White" FontSize="8" />
+                    </Grid>
+
+                    <!-- Rent 1 -->
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" IsVisible="{Binding IsCompany}" Text="Один филиал" TextColor="White" FontSize="8" />
+                        <Label Grid.Column="0" IsVisible="{Binding IsCorp}" Text="Два предприятия" TextColor="White" FontSize="8" />
+                        <Label Grid.Column="1" Text="{Binding Orend[1]}" TextColor="White" FontSize="8" />
+                    </Grid>
+
+                    <!-- Rent 2 -->
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" IsVisible="{Binding IsCompany}" Text="Второй филиал" TextColor="White" FontSize="8" />
+                        <Label Grid.Column="0" IsVisible="{Binding IsCorp}" Text="Три предприятия" TextColor="White" FontSize="8" />
+                        <Label Grid.Column="1" Text="{Binding Orend[2]}" TextColor="White" FontSize="8" />
+                    </Grid>
+
+                    <!-- Rent 3 -->
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" IsVisible="{Binding IsCompany}" Text="Третий филиал" TextColor="White" FontSize="8" />
+                        <Label Grid.Column="0" IsVisible="{Binding IsCorp}" Text="Четыре предприятия" TextColor="White" FontSize="8" />
+                        <Label Grid.Column="1" Text="{Binding Orend[3]}" TextColor="White" FontSize="8" />
+                    </Grid>
+
+                    <!-- Rent 4 -->
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" IsVisible="{Binding IsCompany}" Text="Корпорация" TextColor="White" FontSize="8" />
+                        <Label Grid.Column="0" IsVisible="{Binding IsCorp}" Text="Пять предприятий" TextColor="White" FontSize="8" />
+                        <Label Grid.Column="1" Text="{Binding Orend[4]}" TextColor="White" FontSize="8" />
+                    </Grid>
+
+                    <!-- Rent 5 (if Corp) -->
+                    <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding IsCorp}">
+                        <Label Grid.Column="0" Text="Шесть предприятий" TextColor="White" FontSize="8" />
+                        <Label Grid.Column="1" Text="{Binding Orend[5]}" TextColor="White" FontSize="8" />
+                    </Grid>
+                </VerticalStackLayout>
+
+                <!-- Branch Costs (if Company) -->
+                <VerticalStackLayout Grid.Row="5" IsVisible="{Binding IsCompany}" Spacing="1" Padding="10,1,10,2">
+                    <Label Text="Стоимость:" TextColor="White" FontAttributes="Bold" FontSize="8.5" />
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" Text="Филиалов" TextColor="White" FontSize="8" />
+                        <Label Grid.Column="1" Text="{Binding PriceFilial}" TextColor="White" FontSize="8" />
+                    </Grid>
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" Text="Корпорации" TextColor="White" FontSize="8" />
+                        <Label Grid.Column="1" Text="{Binding PriceCorp}" TextColor="White" FontSize="8" />
+                    </Grid>
+                </VerticalStackLayout>
+
+                <!-- Separator -->
+                <BoxView Grid.Row="6" BackgroundColor="White" HeightRequest="1" HorizontalOptions="Fill" Margin="0,1" />
+
+                <!-- Mortgage Value -->
+                <Grid Grid.Row="7" ColumnDefinitions="*,Auto" Padding="10,2,10,2">
+                    <Label Grid.Column="0" IsVisible="{Binding IsCompany}" Text="Залоговая стоимость одной фирмы:" TextColor="White" FontSize="8" FontAttributes="Bold" LineBreakMode="WordWrap" />
+                    <Label Grid.Column="0" IsVisible="{Binding IsCorp}" Text="Залоговая стоимость одного предприятия:" TextColor="White" FontSize="8" FontAttributes="Bold" LineBreakMode="WordWrap" />
+                    <Label Grid.Column="1" Text="{Binding Deposit}" TextColor="White" FontSize="8" VerticalOptions="Center" />
+                </Grid>
+
+                <!-- Houses & Hotels at bottom -->
+                <HorizontalStackLayout Grid.Row="8" Spacing="4" Margin="10,2,10,2" VerticalOptions="End">
+                    <Image Source="monopolyhouse_green.png" WidthRequest="20" HeightRequest="20" IsVisible="{Binding CompanyBuldVisible[0]}" Aspect="AspectFit" />
+                    <Image Source="monopolyhouse_green.png" WidthRequest="20" HeightRequest="20" IsVisible="{Binding CompanyBuldVisible[1]}" Aspect="AspectFit" />
+                    <Image Source="monopolyhouse_green.png" WidthRequest="20" HeightRequest="20" IsVisible="{Binding CompanyBuldVisible[2]}" Aspect="AspectFit" />
+                    <Image Source="monopolyhouse_red.png" WidthRequest="20" HeightRequest="20" IsVisible="{Binding CompanyBuldVisible[3]}" Aspect="AspectFit" />
+                </HorizontalStackLayout>
+            </Grid>
+
+            <!-- Ban / Mortgage Stamp Overlay -->
+            <Image Source="ban.png"
+                   WidthRequest="150"
+                   HeightRequest="150"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Aspect="AspectFit"
+                   IsVisible="{Binding IsBan}" />
+
+            <!-- Trade Selection Overlay (Sdelka) -->
+            <Image Source="sdelka_logo.png"
+                   WidthRequest="150"
+                   HeightRequest="150"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Aspect="AspectFit"
+                   IsVisible="{Binding Sdelka}" />
+        </Grid>
+    </Border>
+
+</ContentView>

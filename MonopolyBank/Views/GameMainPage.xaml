@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:MonopolyBank.Models"
+             xmlns:controls="clr-namespace:MonopolyBank.Controls"
+             x:Class="MonopolyBank.Views.GameMainPage"
+             BackgroundColor="#fbfbfd"
+             NavigationPage.HasNavigationBar="False">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="0">
+
+            <!-- 1. Glossy Bank Credit Card Header -->
+            <Grid BackgroundColor="#fbfbfd" HeightRequest="240" Padding="15,10,15,15">
+                <!-- Card Background -->
+                <Border HeightRequest="200"
+                        StrokeShape="{RoundRectangle CornerRadius=20}"
+                        StrokeThickness="0"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Fill">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#fd6244" Offset="0.1" />
+                            <GradientStop Color="#e73d60" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="4,10" Radius="25" Opacity="0.4" />
+                    </Border.Shadow>
+
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnMyCardTapped" />
+                    </Border.GestureRecognizers>
+
+                    <Grid>
+                        <!-- Top-Left User Name Badge -->
+                        <Border HorizontalOptions="Start"
+                                VerticalOptions="Start"
+                                HeightRequest="38"
+                                Margin="0,0,0,0"
+                                StrokeShape="{RoundRectangle CornerRadius='0,0,0,10'}"
+                                StrokeThickness="0"
+                                Padding="14,0,18,0">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#151618" Offset="0.1" />
+                                    <GradientStop Color="#44474b" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.Shadow>
+                                <Shadow Brush="Black" Offset="2,4" Radius="10" Opacity="0.4" />
+                            </Border.Shadow>
+                            <Label Text="{Binding CurrentUser.Name}"
+                                   TextColor="White"
+                                   FontSize="20"
+                                   FontAttributes="Bold"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center" />
+                        </Border>
+
+                        <!-- Monopoly Bank Logo -->
+                        <Image Source="bank_monopoly_logo.png"
+                               WidthRequest="175"
+                               HeightRequest="75"
+                               Opacity="0.75"
+                               Aspect="AspectFit"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Start"
+                               Margin="0,15,0,0" />
+
+                        <!-- Contactless NFC Logo (Top-Right) -->
+                        <Image Source="nfc_logo.png"
+                               HeightRequest="42"
+                               WidthRequest="42"
+                               Aspect="AspectFit"
+                               HorizontalOptions="End"
+                               VerticalOptions="Start"
+                               Margin="0,15,20,0" />
+
+                        <!-- Mastercard Logo (Bottom-Right) -->
+                        <Image Source="mastercard_logo.png"
+                               HeightRequest="36"
+                               WidthRequest="55"
+                               Aspect="AspectFit"
+                               HorizontalOptions="End"
+                               VerticalOptions="End"
+                               Margin="0,0,20,18" />
+
+                        <!-- Balance Labels (Bottom-Left) -->
+                        <VerticalStackLayout HorizontalOptions="Start"
+                                             VerticalOptions="End"
+                                             Margin="20,0,0,16"
+                                             Spacing="2">
+                            <Label Text="Сумма на баллансе"
+                                   TextColor="White"
+                                   FontSize="16"
+                                   Opacity="0.9" />
+                            <Label Text="{Binding CurrentUser.Cash, StringFormat='{0} $'}"
+                                   TextColor="White"
+                                   FontSize="32"
+                                   FontAttributes="Bold" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- 2. Section "Ваши активы" (Teal container) -->
+            <VerticalStackLayout>
+                <!-- Section Header -->
+                <Border HeightRequest="44"
+                        StrokeShape="{RoundRectangle CornerRadius='14,14,0,0'}"
+                        StrokeThickness="0">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#019dce" Offset="0.1" />
+                            <GradientStop Color="#0daaa3" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Label Text="Ваши активы"
+                           TextColor="White"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"
+                           Margin="20,0,0,0" />
+                </Border>
+
+                <!-- Cards Horizontal List -->
+                <Grid HeightRequest="310">
+                    <Grid.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#019dce" Offset="0.1" />
+                            <GradientStop Color="#0daaa3" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Grid.Background>
+
+                    <CollectionView ItemsSource="{Binding CurrentUser.Companys}"
+                                    HeightRequest="300"
+                                    VerticalOptions="Center">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Horizontal" ItemSpacing="16" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:Company">
+                                <Grid Padding="12,10,6,15">
+                                    <controls:CompanyCardView BindingContext="{Binding .}" />
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnMyCompanyTapped" CommandParameter="{Binding .}" />
+                                    </Grid.GestureRecognizers>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </VerticalStackLayout>
+
+            <!-- Transition Gap -->
+            <BoxView HeightRequest="15" BackgroundColor="#fbfbfd" />
+
+            <!-- 3. Section "Игроки" (White container) -->
+            <VerticalStackLayout>
+                <!-- Section Header -->
+                <Border HeightRequest="44"
+                        StrokeShape="{RoundRectangle CornerRadius='14,14,0,0'}"
+                        StrokeThickness="0"
+                        BackgroundColor="White">
+                    <Label Text="Игроки"
+                           TextColor="#1A1A1A"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"
+                           Margin="20,0,0,0" />
+                </Border>
+
+                <!-- Players Horizontal List -->
+                <Grid HeightRequest="215" BackgroundColor="White">
+                    <CollectionView ItemsSource="{Binding Users}"
+                                    HeightRequest="205"
+                                    VerticalOptions="Center">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Horizontal" ItemSpacing="14" />
+                        </CollectionView.ItemsLayout>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:User">
+                                <Grid Padding="12,10,6,15">
+                                    <Border WidthRequest="165"
+                                            HeightRequest="180"
+                                            StrokeShape="{RoundRectangle CornerRadius=18}"
+                                            StrokeThickness="0"
+                                            BackgroundColor="#FBFBFC"
+                                            Padding="10">
+                                        <Border.Shadow>
+                                            <Shadow Brush="Black" Offset="3,6" Radius="15" Opacity="0.18" />
+                                        </Border.Shadow>
+                                        <Grid RowDefinitions="*,Auto,Auto">
+                                            <Image Grid.Row="0"
+                                                   Source="{Binding ImgPath}"
+                                                   HeightRequest="60"
+                                                   WidthRequest="60"
+                                                   Aspect="AspectFit"
+                                                   HorizontalOptions="Center"
+                                                   VerticalOptions="Center" />
+
+                                            <Label Grid.Row="1"
+                                                   Text="{Binding Name}"
+                                                   TextColor="#1A1A1A"
+                                                   FontSize="18"
+                                                   FontAttributes="Bold"
+                                                   HorizontalOptions="Center"
+                                                   LineBreakMode="TailTruncation"
+                                                   Margin="0,4,0,2" />
+
+                                            <Label Grid.Row="2"
+                                                   Text="{Binding Cash, StringFormat='{0} $'}"
+                                                   TextColor="#2E7D32"
+                                                   FontSize="18"
+                                                   FontAttributes="Bold"
+                                                   HorizontalOptions="Center"
+                                                   Margin="0,0,0,4" />
+
+                                            <!-- Bankruptcy Overlay -->
+                                            <Image Grid.RowSpan="3"
+                                                   Source="bankrot.png"
+                                                   Aspect="AspectFit"
+                                                   WidthRequest="140"
+                                                   HorizontalOptions="Center"
+                                                   VerticalOptions="Center"
+                                                   IsVisible="{Binding isGameOver}" />
+                                        </Grid>
+                                    </Border>
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnPlayerTapped" CommandParameter="{Binding .}" />
+                                    </Grid.GestureRecognizers>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </VerticalStackLayout>
+
+            <!-- Transition Gap -->
+            <BoxView HeightRequest="15" BackgroundColor="#fbfbfd" />
+
+            <!-- 4. Section "История транзакций" (Gold / Amber container) -->
+            <VerticalStackLayout>
+                <!-- Section Header -->
+                <Border HeightRequest="44"
+                        StrokeShape="{RoundRectangle CornerRadius='14,14,0,0'}"
+                        StrokeThickness="0">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#ffd131" Offset="0.1" />
+                            <GradientStop Color="#f2ad2f" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Label Text="История транзакций"
+                           TextColor="White"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"
+                           Margin="20,0,0,0" />
+                </Border>
+
+                <!-- History Items -->
+                <Border StrokeThickness="0" Padding="12,10">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#ffd131" Offset="0.1" />
+                            <GradientStop Color="#f2ad2f" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+
+                    <CollectionView ItemsSource="{Binding Historys}"
+                                    HeightRequest="240">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:History">
+                                <Border Margin="0,4,0,6"
+                                        StrokeShape="{RoundRectangle CornerRadius=12}"
+                                        StrokeThickness="0"
+                                        Padding="10,8">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                            <GradientStop Color="#fd6244" Offset="0.1" />
+                                            <GradientStop Color="#e73d60" Offset="1.0" />
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                    <Border.Shadow>
+                                        <Shadow Brush="Black" Offset="2,4" Radius="8" Opacity="0.3" />
+                                    </Border.Shadow>
+
+                                    <Grid ColumnDefinitions="45,*,Auto" ColumnSpacing="10">
+                                        <Image Grid.Column="0"
+                                               Source="{Binding name_img}"
+                                               HeightRequest="36"
+                                               WidthRequest="36"
+                                               Aspect="AspectFit"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center" />
+
+                                        <Label Grid.Column="1"
+                                               Text="{Binding Text}"
+                                               TextColor="White"
+                                               FontSize="13"
+                                               VerticalOptions="Center"
+                                               LineBreakMode="WordWrap" />
+
+                                        <Label Grid.Column="2"
+                                               Text="{Binding Cash, StringFormat='{0} $'}"
+                                               TextColor="White"
+                                               FontAttributes="Bold"
+                                               FontSize="15"
+                                               VerticalOptions="Center"
+                                               IsVisible="{Binding isVisibleCash}" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Border>
+            </VerticalStackLayout>
+
+            <BoxView HeightRequest="30" BackgroundColor="#fbfbfd" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

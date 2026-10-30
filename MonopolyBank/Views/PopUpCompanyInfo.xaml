@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MonopolyBank.Controls"
+             x:Class="MonopolyBank.Views.PopUpCompanyInfo"
+             BackgroundColor="#80000000">
+
+    <Grid>
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnBackdropTapped" />
+        </Grid.GestureRecognizers>
+
+        <Border VerticalOptions="Center"
+                HorizontalOptions="Center"
+                WidthRequest="310"
+                BackgroundColor="White"
+                StrokeShape="{RoundRectangle CornerRadius=20}"
+                Padding="16"
+                StrokeThickness="0">
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="4,10" Radius="25" Opacity="0.4"/>
+            </Border.Shadow>
+
+            <ScrollView MaximumHeightRequest="560">
+                <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+                    <!-- Physical Monopoly Deed Card -->
+                    <controls:CompanyCardView BindingContext="{Binding .}" HorizontalOptions="Center" />
+
+                    <!-- Management Buttons with Gradients -->
+                    <VerticalStackLayout Spacing="8" WidthRequest="260" Margin="0,6,0,0">
+                        <Button x:Name="BtnBuildBranch"
+                                Text="Построить дом (+100$)"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                FontSize="14"
+                                CornerRadius="12"
+                                HeightRequest="40"
+                                Clicked="OnBuildBranchClicked">
+                            <Button.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#55b155" Offset="0.1" />
+                                    <GradientStop Color="#3b7d3b" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </Button.Background>
+                            <Button.Shadow>
+                                <Shadow Brush="Black" Offset="2,4" Radius="6" Opacity="0.25"/>
+                            </Button.Shadow>
+                        </Button>
+
+                        <Button x:Name="BtnBuildCorp"
+                                Text="Построить корпорацию (+100$)"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                FontSize="14"
+                                CornerRadius="12"
+                                HeightRequest="40"
+                                Clicked="OnBuildCorpClicked">
+                            <Button.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#55b155" Offset="0.1" />
+                                    <GradientStop Color="#3b7d3b" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </Button.Background>
+                            <Button.Shadow>
+                                <Shadow Brush="Black" Offset="2,4" Radius="6" Opacity="0.25"/>
+                            </Button.Shadow>
+                        </Button>
+
+                        <Button x:Name="BtnDestroyBranch"
+                                Text="Продать постройку (+100$)"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                FontSize="14"
+                                CornerRadius="12"
+                                HeightRequest="40"
+                                Clicked="OnDestroyBranchClicked">
+                            <Button.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#fd6244" Offset="0.1" />
+                                    <GradientStop Color="#e73d60" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </Button.Background>
+                            <Button.Shadow>
+                                <Shadow Brush="Black" Offset="2,4" Radius="6" Opacity="0.25"/>
+                            </Button.Shadow>
+                        </Button>
+
+                        <Button x:Name="BtnPledge"
+                                Text="Заложить в банк"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                FontSize="14"
+                                CornerRadius="12"
+                                HeightRequest="40"
+                                Clicked="OnPledgeClicked">
+                            <Button.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#fd6244" Offset="0.1" />
+                                    <GradientStop Color="#e73d60" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </Button.Background>
+                            <Button.Shadow>
+                                <Shadow Brush="Black" Offset="2,4" Radius="6" Opacity="0.25"/>
+                            </Button.Shadow>
+                        </Button>
+
+                        <Button x:Name="BtnRedeem"
+                                Text="Выкупить из залога"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                FontSize="14"
+                                CornerRadius="12"
+                                HeightRequest="40"
+                                Clicked="OnRedeemClicked">
+                            <Button.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#55b155" Offset="0.1" />
+                                    <GradientStop Color="#3b7d3b" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </Button.Background>
+                            <Button.Shadow>
+                                <Shadow Brush="Black" Offset="2,4" Radius="6" Opacity="0.25"/>
+                            </Button.Shadow>
+                        </Button>
+
+                        <Button x:Name="BtnSellBank"
+                                Text="Продать банку"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                FontSize="14"
+                                CornerRadius="12"
+                                HeightRequest="40"
+                                Clicked="OnSellBankClicked">
+                            <Button.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#e53935" Offset="0.1" />
+                                    <GradientStop Color="#b71c1c" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </Button.Background>
+                            <Button.Shadow>
+                                <Shadow Brush="Black" Offset="2,4" Radius="6" Opacity="0.25"/>
+                            </Button.Shadow>
+                        </Button>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </ScrollView>
+        </Border>
+    </Grid>
+
+</ContentPage>

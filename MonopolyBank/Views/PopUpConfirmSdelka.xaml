@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MonopolyBank.Views.PopUpConfirmSdelka"
+             BackgroundColor="#80000000">
+
+    <Grid>
+        <Border VerticalOptions="Center"
+                HorizontalOptions="Center"
+                WidthRequest="310"
+                BackgroundColor="White"
+                StrokeShape="{RoundRectangle CornerRadius=20}"
+                Padding="0"
+                StrokeThickness="0">
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="4,10" Radius="25" Opacity="0.4"/>
+            </Border.Shadow>
+
+            <VerticalStackLayout Spacing="0">
+                <!-- Header with dark blue gradient -->
+                <Border HeightRequest="45"
+                        StrokeShape="{RoundRectangle CornerRadius='20,20,0,0'}"
+                        StrokeThickness="0">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#27283d" Offset="0.1" />
+                            <GradientStop Color="#575a89" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Label x:Name="TitleLabel"
+                           Text="Сделка с игроком"
+                           TextColor="White"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                </Border>
+
+                <!-- Body with azure tint -->
+                <VerticalStackLayout BackgroundColor="#F0F8FF" Padding="20,16" Spacing="14" HorizontalOptions="Fill">
+                    <Label Text="Успех"
+                           TextColor="#1B5E20"
+                           FontSize="26"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center" />
+
+                    <Image Source="conform_sdelka.png"
+                           WidthRequest="130"
+                           HeightRequest="130"
+                           Aspect="AspectFit"
+                           HorizontalOptions="Center" />
+
+                    <Button Text="Завершить"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            CornerRadius="14"
+                            HeightRequest="46"
+                            Clicked="OnFinishClicked">
+                        <Button.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#55b155" Offset="0.1" />
+                                <GradientStop Color="#3b7d3b" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </Button.Background>
+                        <Button.Shadow>
+                            <Shadow Brush="Black" Offset="2,4" Radius="8" Opacity="0.3"/>
+                        </Button.Shadow>
+                    </Button>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+
+</ContentPage>

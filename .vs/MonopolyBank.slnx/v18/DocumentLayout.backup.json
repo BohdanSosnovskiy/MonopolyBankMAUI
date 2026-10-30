@@ -1,0 +1,73 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Alex_\\source\\repos\\MonopolyBank\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{28944648-7768-E5E5-BE42-16B735426CFF}|MonopolyBank\\MonopolyBank.csproj|c:\\users\\alex_\\source\\repos\\monopolybank\\monopolybank\\views\\gamemainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{28944648-7768-E5E5-BE42-16B735426CFF}|MonopolyBank\\MonopolyBank.csproj|solutionrelative:monopolybank\\views\\gamemainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{28944648-7768-E5E5-BE42-16B735426CFF}|MonopolyBank\\MonopolyBank.csproj|c:\\users\\alex_\\source\\repos\\monopolybank\\monopolybank\\views\\popupinfouser.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{28944648-7768-E5E5-BE42-16B735426CFF}|MonopolyBank\\MonopolyBank.csproj|solutionrelative:monopolybank\\views\\popupinfouser.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{28944648-7768-E5E5-BE42-16B735426CFF}|MonopolyBank\\MonopolyBank.csproj|c:\\users\\alex_\\source\\repos\\monopolybank\\monopolybank\\views\\pageobmencompanyuser.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{28944648-7768-E5E5-BE42-16B735426CFF}|MonopolyBank\\MonopolyBank.csproj|solutionrelative:monopolybank\\views\\pageobmencompanyuser.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PopUpInfoUser.xaml",
+              "DocumentMoniker": "C:\\Users\\Alex_\\source\\repos\\MonopolyBank\\MonopolyBank\\Views\\PopUpInfoUser.xaml",
+              "RelativeDocumentMoniker": "MonopolyBank\\Views\\PopUpInfoUser.xaml",
+              "ToolTip": "C:\\Users\\Alex_\\source\\repos\\MonopolyBank\\MonopolyBank\\Views\\PopUpInfoUser.xaml",
+              "RelativeToolTip": "MonopolyBank\\Views\\PopUpInfoUser.xaml",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAACoAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-10-07T21:26:28.862Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PageObmenCompanyUser.xaml",
+              "DocumentMoniker": "C:\\Users\\Alex_\\source\\repos\\MonopolyBank\\MonopolyBank\\Views\\PageObmenCompanyUser.xaml",
+              "RelativeDocumentMoniker": "MonopolyBank\\Views\\PageObmenCompanyUser.xaml",
+              "ToolTip": "C:\\Users\\Alex_\\source\\repos\\MonopolyBank\\MonopolyBank\\Views\\PageObmenCompanyUser.xaml",
+              "RelativeToolTip": "MonopolyBank\\Views\\PageObmenCompanyUser.xaml",
+              "ViewState": "AgIAAMcAAAAAAAAAAAAAANkAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-10-07T21:24:46.293Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GameMainPage.xaml",
+              "DocumentMoniker": "C:\\Users\\Alex_\\source\\repos\\MonopolyBank\\MonopolyBank\\Views\\GameMainPage.xaml",
+              "RelativeDocumentMoniker": "MonopolyBank\\Views\\GameMainPage.xaml",
+              "ToolTip": "C:\\Users\\Alex_\\source\\repos\\MonopolyBank\\MonopolyBank\\Views\\GameMainPage.xaml",
+              "RelativeToolTip": "MonopolyBank\\Views\\GameMainPage.xaml",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAAADMAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-10-07T21:20:32.37Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

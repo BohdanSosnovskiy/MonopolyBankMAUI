@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:MonopolyBank.Models"
+             x:Class="MonopolyBank.Views.PageTemplateStore"
+             BackgroundColor="#0e1017"
+             Title="Магазин Монополий">
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="14,10">
+        <!-- Header -->
+        <VerticalStackLayout Grid.Row="0" Spacing="4" Margin="2,0,2,10">
+            <Label Text="КАТАЛОГ ШАБЛОНОВ"
+                   TextColor="White"
+                   FontSize="20"
+                   FontAttributes="Bold" />
+            <Label Text="Скачивайте готовые авторские монополии или делитесь своими"
+                   TextColor="#888"
+                   FontSize="12" />
+        </VerticalStackLayout>
+
+        <!-- Templates Collection -->
+        <CollectionView Grid.Row="1"
+                        x:Name="StoreCollection"
+                        SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:MonopolyPreset">
+                    <Border Margin="0,6"
+                            BackgroundColor="#1a1c26"
+                            StrokeShape="{RoundRectangle CornerRadius=16}"
+                            StrokeThickness="1"
+                            Padding="16,14">
+                        <Border.Stroke>
+                            <SolidColorBrush Color="#282a38" />
+                        </Border.Stroke>
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                <Label Text="{Binding Name}"
+                                       TextColor="White"
+                                       FontSize="16"
+                                       FontAttributes="Bold" />
+                                <Label Text="{Binding Description}"
+                                       TextColor="#aaa"
+                                       FontSize="12" />
+                                <HorizontalStackLayout Spacing="10">
+                                    <Label Text="{Binding Author, StringFormat='Автор: {0}'}"
+                                           TextColor="#0daaa3"
+                                           FontSize="11" />
+                                    <Label Text="{Binding Companies.Count, StringFormat='Улиц: {0}'}"
+                                           TextColor="#777"
+                                           FontSize="11" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+
+                            <!-- Download Button -->
+                            <Button Grid.Column="1"
+                                    Text="📥 Скачать"
+                                    FontSize="12"
+                                    FontAttributes="Bold"
+                                    TextColor="White"
+                                    BackgroundColor="#0daaa3"
+                                    CornerRadius="10"
+                                    HeightRequest="38"
+                                    VerticalOptions="Center"
+                                    Clicked="OnDownloadTemplateClicked"
+                                    CommandParameter="{Binding .}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Publish Your Board Button (Pro Only) -->
+        <Button Grid.Row="2"
+                Text="📤 Опубликовать свою монополию в каталог"
+                TextColor="White"
+                FontAttributes="Bold"
+                FontSize="14"
+                HeightRequest="48"
+                CornerRadius="12"
+                Margin="0,8,0,4"
+                Clicked="OnPublishClicked">
+            <Button.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#8e2de2" Offset="0.0" />
+                    <GradientStop Color="#4a00e0" Offset="1.0" />
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+    </Grid>
+
+</ContentPage>

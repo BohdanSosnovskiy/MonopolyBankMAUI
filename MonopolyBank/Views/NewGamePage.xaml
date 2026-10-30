@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MonopolyBank.Views.NewGamePage"
+             BackgroundColor="#fbfbfd"
+             Title="Новая игра">
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Margin="24, 20" Spacing="16">
+                
+                <!-- Host Device IP Banner -->
+                <Border Stroke="#0daaa3" 
+                        StrokeThickness="1" 
+                        BackgroundColor="#e6f7f6" 
+                        StrokeShape="RoundRectangle 12" 
+                        Padding="14,10" 
+                        Margin="0,0,0,4">
+                    <VerticalStackLayout Spacing="3">
+                        <Label Text="Ваш IP для подключения других игроков:" 
+                               TextColor="#006666" 
+                               FontSize="13" 
+                               FontAttributes="Bold"/>
+                        <Label x:Name="HostIpLabel" 
+                               Text="Определение IP..." 
+                               TextColor="#004d4d" 
+                               FontSize="17" 
+                               FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="Имя игрока (Хост)" 
+                       FontAttributes="Bold" 
+                       TextColor="#333333" 
+                       FontSize="15"/>
+                <Border Stroke="#cfd9e5" 
+                        StrokeThickness="1" 
+                        BackgroundColor="#edf2f7" 
+                        StrokeShape="RoundRectangle 12" 
+                        HeightRequest="52" 
+                        Padding="12,0">
+                    <Entry x:Name="Username" 
+                           Placeholder="Введите имя игрока" 
+                           PlaceholderColor="#888888" 
+                           TextColor="#111111" 
+                           VerticalOptions="Center"/>
+                </Border>
+
+                <Label Text="Стартовый капитал ($)" 
+                       FontAttributes="Bold" 
+                       TextColor="#333333" 
+                       FontSize="15"/>
+                <Border Stroke="#cfd9e5" 
+                        StrokeThickness="1" 
+                        BackgroundColor="#edf2f7" 
+                        StrokeShape="RoundRectangle 12" 
+                        HeightRequest="52" 
+                        Padding="12,0">
+                    <Entry x:Name="CountCashStart" 
+                           Keyboard="Numeric" 
+                           Text="15000" 
+                           Placeholder="15000" 
+                           PlaceholderColor="#888888" 
+                           TextColor="#111111" 
+                           VerticalOptions="Center"/>
+                </Border>
+
+                <Label Text="Сумма за круг / проход Старта ($)" 
+                       FontAttributes="Bold" 
+                       TextColor="#333333" 
+                       FontSize="15"/>
+                <Border Stroke="#cfd9e5" 
+                        StrokeThickness="1" 
+                        BackgroundColor="#edf2f7" 
+                        StrokeShape="RoundRectangle 12" 
+                        HeightRequest="52" 
+                        Padding="12,0">
+                    <Entry x:Name="CountStartSum" 
+                           Keyboard="Numeric" 
+                           Text="200" 
+                           Placeholder="200" 
+                           PlaceholderColor="#888888" 
+                           TextColor="#111111" 
+                           VerticalOptions="Center"/>
+                </Border>
+
+                <Button x:Name="BtnStartGame" 
+                        Text="Создать и войти в банк" 
+                        Clicked="OnStartNewGame"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        HeightRequest="52"
+                        CornerRadius="14"
+                        Margin="0, 16, 0, 0">
+                    <Button.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#fd6244" Offset="0.0" />
+                            <GradientStop Color="#e73d60" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Button.Background>
+                    <Button.Shadow>
+                        <Shadow Brush="Black" Offset="0,4" Radius="10" Opacity="0.3" />
+                    </Button.Shadow>
+                </Button>
+
+                <HorizontalStackLayout x:Name="StartingLayout"
+                                       Spacing="12"
+                                       HorizontalOptions="Center"
+                                       Margin="0, 8, 0, 0"
+                                       IsVisible="False">
+                    <ActivityIndicator IsRunning="True" Color="#fd6244" WidthRequest="24" HeightRequest="24"/>
+                    <Label Text="Запуск сервера и подготовка банка..."
+                           TextColor="#e73d60"
+                           FontAttributes="Bold"
+                           FontSize="14"
+                           VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Image Grid.Row="1"
+               Source="city.png"
+               Aspect="AspectFill"
+               HeightRequest="180"
+               HorizontalOptions="Fill" />
+    </Grid>
+</ContentPage>

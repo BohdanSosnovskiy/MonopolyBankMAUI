@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MonopolyBank.Views.PagePresetList"
+             BackgroundColor="#0e1017"
+             Title="Мои Монополии">
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Padding="14,10">
+        <!-- Top Title & Pro Badge -->
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="2,0,2,8">
+            <VerticalStackLayout Grid.Column="0" Spacing="2">
+                <Label Text="БИБЛИОТЕКА ИГР"
+                       TextColor="White"
+                       FontSize="18"
+                       FontAttributes="Bold" />
+                <Label Text="Выберите монополию для текущей партии"
+                       TextColor="#888"
+                       FontSize="11" />
+            </VerticalStackLayout>
+
+            <!-- PRO Badge -->
+            <Border Grid.Column="1"
+                    x:Name="ProBadge"
+                    StrokeShape="{RoundRectangle CornerRadius=12}"
+                    StrokeThickness="0"
+                    Padding="10,4"
+                    VerticalOptions="Center">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#fd6244" Offset="0.0"/>
+                        <GradientStop Color="#e73d60" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Label x:Name="ProBadgeText"
+                       Text="PRO"
+                       TextColor="White"
+                       FontSize="11"
+                       FontAttributes="Bold" />
+            </Border>
+        </Grid>
+
+        <!-- Active Monopoly Banner -->
+        <Border Grid.Row="1"
+                BackgroundColor="#1c2030"
+                StrokeShape="{RoundRectangle CornerRadius=14}"
+                StrokeThickness="1"
+                Padding="12,10"
+                Margin="0,0,0,10">
+            <Border.Stroke>
+                <SolidColorBrush Color="#0daaa3" />
+            </Border.Stroke>
+
+            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10" VerticalOptions="Center">
+                <Label Grid.Column="0" Text="🟢" FontSize="16" VerticalOptions="Center" />
+                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="1">
+                    <Label Text="АКТИВНАЯ МОНОПОЛИЯ В ИГРЕ:" TextColor="#0daaa3" FontSize="10" FontAttributes="Bold" />
+                    <Label x:Name="ActiveMonopolyTitle" Text="Харьковская Монополия (Оригинал)" TextColor="White" FontSize="14" FontAttributes="Bold" LineBreakMode="TailTruncation" />
+                </VerticalStackLayout>
+                <Label Grid.Column="2" Text="Выбрана" TextColor="#0daaa3" FontSize="12" FontAttributes="Bold" VerticalOptions="Center" />
+            </Grid>
+        </Border>
+
+        <!-- Presets Collection -->
+        <CollectionView Grid.Row="2"
+                        x:Name="PresetsCollection"
+                        SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="0,5"
+                            BackgroundColor="#161824"
+                            StrokeShape="{RoundRectangle CornerRadius=16}"
+                            StrokeThickness="1"
+                            Padding="14,12">
+                        <Border.Stroke>
+                            <SolidColorBrush Color="#282a3a" />
+                        </Border.Stroke>
+
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                            <!-- Preset Details -->
+                            <VerticalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label Text="{Binding Preset.Name}"
+                                           TextColor="White"
+                                           FontSize="15"
+                                           FontAttributes="Bold"
+                                           LineBreakMode="TailTruncation" />
+                                    <!-- Built-in Badge -->
+                                    <Border IsVisible="{Binding Preset.IsBuiltIn}"
+                                            BackgroundColor="#27283d"
+                                            StrokeShape="{RoundRectangle CornerRadius=6}"
+                                            StrokeThickness="0"
+                                            Padding="6,2">
+                                        <Label Text="Оригинал"
+                                               TextColor="#0daaa3"
+                                               FontSize="10"
+                                               FontAttributes="Bold" />
+                                    </Border>
+                                </HorizontalStackLayout>
+
+                                <Label Text="{Binding Preset.Description}"
+                                       TextColor="#999"
+                                       FontSize="11"
+                                       LineBreakMode="TailTruncation" />
+
+                                <HorizontalStackLayout Spacing="8">
+                                    <Label Text="{Binding Preset.Companies.Count, StringFormat='Карточек: {0}'}"
+                                           TextColor="#777"
+                                           FontSize="10" />
+                                    <Label Text="{Binding Preset.Author, StringFormat='• {0}'}"
+                                           TextColor="#0daaa3"
+                                           FontSize="10" />
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+
+                            <!-- Actions -->
+                            <HorizontalStackLayout Grid.Column="1" Spacing="6" VerticalOptions="Center">
+                                <!-- Select Button (shows checkmark if already active) -->
+                                <Button Text="{Binding ActionButtonText}"
+                                        FontSize="11"
+                                        FontAttributes="Bold"
+                                        TextColor="White"
+                                        BackgroundColor="{Binding ActionButtonColor}"
+                                        CornerRadius="10"
+                                        HeightRequest="36"
+                                        Padding="10,0"
+                                        Clicked="OnSelectPresetClicked"
+                                        CommandParameter="{Binding Preset}" />
+
+                                <Button Text="✎"
+                                        FontSize="14"
+                                        FontAttributes="Bold"
+                                        TextColor="White"
+                                        BackgroundColor="#27283d"
+                                        CornerRadius="10"
+                                        HeightRequest="36"
+                                        WidthRequest="36"
+                                        Clicked="OnEditPresetClicked"
+                                        CommandParameter="{Binding Preset}" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- Bottom Action Buttons: Создать & Магазин & Активация Pro -->
+        <VerticalStackLayout Grid.Row="3" Spacing="10" Margin="0,10,0,4">
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                <Button Grid.Column="0"
+                        Text="+ Создать игру"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        FontSize="13"
+                        HeightRequest="46"
+                        CornerRadius="12"
+                        Clicked="OnCreatePresetClicked">
+                    <Button.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#8e2de2" Offset="0.0" />
+                            <GradientStop Color="#4a00e0" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+
+                <Button Grid.Column="1"
+                        Text="🌐 Каталог шаблонов"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        FontSize="13"
+                        HeightRequest="46"
+                        CornerRadius="12"
+                        Clicked="OnOpenStoreClicked">
+                    <Button.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#019dce" Offset="0.0" />
+                            <GradientStop Color="#0daaa3" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+            </Grid>
+
+            <Button x:Name="BtnProStatus"
+                    Text="👑 Активировать Pro ключ"
+                    TextColor="#ffe828"
+                    BackgroundColor="#1c1f2e"
+                    FontSize="12"
+                    FontAttributes="Bold"
+                    HeightRequest="38"
+                    CornerRadius="10"
+                    Clicked="OnProActivateClicked" />
+        </VerticalStackLayout>
+    </Grid>
+
+</ContentPage>

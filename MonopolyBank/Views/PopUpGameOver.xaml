@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MonopolyBank.Views.PopUpGameOver"
+             BackgroundColor="Transparent"
+             Title="PopUpGameOver">
+
+    <Grid>
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnBackdropTapped" />
+        </Grid.GestureRecognizers>
+
+        <Border VerticalOptions="Center"
+                HorizontalOptions="Fill"
+                Margin="25"
+                BackgroundColor="White"
+                StrokeShape="{RoundRectangle CornerRadius=20}"
+                Padding="0"
+                StrokeThickness="0">
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="4,10" Radius="25" Opacity="0.4"/>
+            </Border.Shadow>
+
+            <Grid RowDefinitions="44,Auto,Auto,Auto" Padding="0,0,0,15">
+                <!-- Header with dark blue gradient -->
+                <Border Grid.Row="0"
+                        HeightRequest="44"
+                        StrokeShape="{RoundRectangle CornerRadius='20,20,0,0'}"
+                        StrokeThickness="0">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#27283d" Offset="0.1" />
+                            <GradientStop Color="#575a89" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Label Text="Игра окончена"
+                           FontSize="20"
+                           TextColor="White"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"/>
+                </Border>
+
+                <!-- Mr Monopoly with empty pockets -->
+                <Image Grid.Row="1"
+                       Source="monopoly_man.png"
+                       Margin="0, 15, 0, 0"
+                       Opacity="0.6"
+                       WidthRequest="130"
+                       Aspect="AspectFit"
+                       HorizontalOptions="Center" />
+
+                <!-- Pixel GAME OVER logo -->
+                <Image Grid.Row="2"
+                       Source="gameover.png"
+                       Margin="0, 5, 0, 15"
+                       WidthRequest="200"
+                       Aspect="AspectFit"
+                       HorizontalOptions="Center" />
+
+                <!-- Coral Банкрот Button -->
+                <Button Grid.Row="3"
+                        Text="Банкрот"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        CornerRadius="14"
+                        HeightRequest="44"
+                        Margin="15, 0, 15, 0"
+                        HorizontalOptions="Fill"
+                        Clicked="OnGameOverClicked">
+                    <Button.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#fd6244" Offset="0.1" />
+                            <GradientStop Color="#e73d60" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Button.Background>
+                    <Button.Shadow>
+                        <Shadow Brush="Black" Offset="2,4" Radius="8" Opacity="0.3"/>
+                    </Button.Shadow>
+                </Button>
+            </Grid>
+        </Border>
+    </Grid>
+
+</ContentPage>

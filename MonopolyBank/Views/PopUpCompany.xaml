@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MonopolyBank.Controls"
+             x:Class="MonopolyBank.Views.PopUpCompany"
+             BackgroundColor="#80000000">
+
+    <Grid>
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnBackdropTapped" />
+        </Grid.GestureRecognizers>
+
+        <Border VerticalOptions="Center"
+                HorizontalOptions="Center"
+                WidthRequest="290"
+                BackgroundColor="White"
+                StrokeShape="{RoundRectangle CornerRadius=20}"
+                Padding="18,18"
+                StrokeThickness="0">
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="4,10" Radius="25" Opacity="0.4"/>
+            </Border.Shadow>
+
+            <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+                <!-- Physical Monopoly Deed Card -->
+                <controls:CompanyCardView BindingContext="{Binding .}" HorizontalOptions="Center" />
+
+                <!-- Price Text -->
+                <Label Text="{Binding Price, StringFormat='Цена: {0} $'}"
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       TextColor="Black"
+                       HorizontalOptions="Center"
+                       Margin="0,4,0,2" />
+
+                <!-- Action Buttons: Купить и Аукцион -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12" WidthRequest="250">
+                    <Button Grid.Column="0"
+                            Text="Купить"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            FontSize="15"
+                            CornerRadius="14"
+                            HeightRequest="42"
+                            Clicked="OnBuyClicked">
+                        <Button.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#55b155" Offset="0.1" />
+                                <GradientStop Color="#3b7d3b" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </Button.Background>
+                        <Button.Shadow>
+                            <Shadow Brush="Black" Offset="2,4" Radius="8" Opacity="0.3" />
+                        </Button.Shadow>
+                    </Button>
+
+                    <Button Grid.Column="1"
+                            Text="Аукцион"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            FontSize="15"
+                            CornerRadius="14"
+                            HeightRequest="42"
+                            Clicked="OnAuctionClicked">
+                        <Button.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#fd6244" Offset="0.1" />
+                                <GradientStop Color="#e73d60" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </Button.Background>
+                        <Button.Shadow>
+                            <Shadow Brush="Black" Offset="2,4" Radius="8" Opacity="0.3" />
+                        </Button.Shadow>
+                    </Button>
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+
+</ContentPage>

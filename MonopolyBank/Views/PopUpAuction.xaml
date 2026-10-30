@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MonopolyBank.Views.PopUpAuction"
+             BackgroundColor="#80000000">
+
+    <Grid>
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnBackdropTapped" />
+        </Grid.GestureRecognizers>
+
+        <Border VerticalOptions="Center"
+                HorizontalOptions="Center"
+                WidthRequest="320"
+                BackgroundColor="White"
+                StrokeShape="{RoundRectangle CornerRadius=22}"
+                Padding="18,16"
+                StrokeThickness="0">
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="4,10" Radius="25" Opacity="0.45"/>
+            </Border.Shadow>
+
+            <VerticalStackLayout Spacing="10" HorizontalOptions="Fill">
+                <!-- Top Header -->
+                <Grid ColumnDefinitions="40,*,Auto" VerticalOptions="Center">
+                    <Image Grid.Column="0"
+                           Source="torg_money.png"
+                           HeightRequest="36"
+                           WidthRequest="36"
+                           Aspect="AspectFit"
+                           VerticalOptions="Center" />
+
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Margin="6,0,0,0">
+                        <Label Text="АУКЦИОН"
+                               TextColor="#27283d"
+                               FontSize="18"
+                               FontAttributes="Bold" />
+                        <Label x:Name="InitiatorLabel"
+                               Text="Торги за компанию"
+                               TextColor="#777"
+                               FontSize="11" />
+                    </VerticalStackLayout>
+
+                    <Button Grid.Column="2"
+                            Text="✕"
+                            TextColor="#999"
+                            BackgroundColor="Transparent"
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            Padding="0"
+                            HeightRequest="36"
+                            WidthRequest="36"
+                            Clicked="OnPassClicked" />
+                </Grid>
+
+                <!-- Company Banner -->
+                <Border x:Name="CompanyColorBorder"
+                        StrokeShape="{RoundRectangle CornerRadius=12}"
+                        StrokeThickness="0"
+                        Padding="10,8"
+                        HorizontalOptions="Fill">
+                    <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                        <Label x:Name="CompanyNameLabel"
+                               Text="КОМПАНИЯ"
+                               TextColor="White"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center" />
+                        <Label x:Name="CompanyNominalLabel"
+                               Text="Номинал: 0 $"
+                               TextColor="White"
+                               FontSize="12"
+                               Opacity="0.9"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Current Bid & Leader Display -->
+                <Border BackgroundColor="#f4f6fa"
+                        StrokeShape="{RoundRectangle CornerRadius=14}"
+                        StrokeThickness="0"
+                        Padding="12,10"
+                        HorizontalOptions="Fill">
+                    <VerticalStackLayout Spacing="3" HorizontalOptions="Center">
+                        <Label Text="ТЕКУЩАЯ СТАВКА"
+                               TextColor="#888"
+                               FontSize="11"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center" />
+
+                        <Label x:Name="CurrentBidLabel"
+                               Text="10 $"
+                               TextColor="#e73d60"
+                               FontSize="28"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center" />
+
+                        <Label x:Name="LeaderLabel"
+                               Text="Лидер: Ставок пока нет"
+                               TextColor="#27283d"
+                               FontSize="13"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center" />
+
+                        <!-- Interactive Status Banner -->
+                        <Border x:Name="StatusBadgeBorder"
+                                BackgroundColor="#eefbee"
+                                StrokeShape="{RoundRectangle CornerRadius=8}"
+                                StrokeThickness="0"
+                                Padding="8,4"
+                                Margin="0,2,0,2"
+                                HorizontalOptions="Center">
+                            <Label x:Name="StatusBadgeLabel"
+                                   Text="Ожидание ставок..."
+                                   TextColor="#2e7d32"
+                                   FontSize="11"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"
+                                   HorizontalTextAlignment="Center" />
+                        </Border>
+
+                        <!-- Timer & Progress -->
+                        <Label x:Name="TimerLabel"
+                               Text="⏱ Ожидание ставок: 15 сек"
+                               TextColor="#3b7d3b"
+                               FontSize="12"
+                               FontAttributes="Bold"
+                               HorizontalOptions="Center"
+                               Margin="0,4,0,2" />
+
+                        <ProgressBar x:Name="TimerProgress"
+                                     Progress="1.0"
+                                     ProgressColor="#fd6244"
+                                     HeightRequest="4"
+                                     HorizontalOptions="Fill" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Quick Bid Header with My Balance -->
+                <Grid ColumnDefinitions="*,Auto" Margin="2,2,2,0">
+                    <Label x:Name="ActionPromptLabel"
+                           Text="Повысить ставку:"
+                           TextColor="#555"
+                           FontSize="12"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center" />
+                    <Label x:Name="MyBalanceLabel"
+                           Text="Ваш баланс: 0 $"
+                           TextColor="#27283d"
+                           FontSize="11"
+                           FontAttributes="Bold"
+                           HorizontalOptions="End"
+                           VerticalOptions="Center" />
+                </Grid>
+
+                <Grid ColumnDefinitions="*,*" RowDefinitions="40,40" ColumnSpacing="10" RowSpacing="8">
+                    <!-- +10 $ -->
+                    <Button Grid.Row="0" Grid.Column="0"
+                            x:Name="Bid10Btn"
+                            Text="+10 $"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            FontSize="14"
+                            CornerRadius="10"
+                            Clicked="OnBid10Clicked">
+                        <Button.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#55b155" Offset="0.1" />
+                                <GradientStop Color="#3b7d3b" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+
+                    <!-- +50 $ -->
+                    <Button Grid.Row="0" Grid.Column="1"
+                            x:Name="Bid50Btn"
+                            Text="+50 $"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            FontSize="14"
+                            CornerRadius="10"
+                            Clicked="OnBid50Clicked">
+                        <Button.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#55b155" Offset="0.1" />
+                                <GradientStop Color="#3b7d3b" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+
+                    <!-- +100 $ -->
+                    <Button Grid.Row="1" Grid.Column="0"
+                            x:Name="Bid100Btn"
+                            Text="+100 $"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            FontSize="14"
+                            CornerRadius="10"
+                            Clicked="OnBid100Clicked">
+                        <Button.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#fd6244" Offset="0.1" />
+                                <GradientStop Color="#e73d60" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+
+                    <!-- +500 $ -->
+                    <Button Grid.Row="1" Grid.Column="1"
+                            x:Name="Bid500Btn"
+                            Text="+500 $"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            FontSize="14"
+                            CornerRadius="10"
+                            Clicked="OnBid500Clicked">
+                        <Button.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#fd6244" Offset="0.1" />
+                                <GradientStop Color="#e73d60" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                </Grid>
+
+                <!-- Footer Buttons: Пас и Завершить -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,4,0,0">
+                    <Button Grid.Column="0"
+                            x:Name="PassBtn"
+                            Text="Пас"
+                            TextColor="#555"
+                            BackgroundColor="#e9ecef"
+                            FontAttributes="Bold"
+                            FontSize="13"
+                            HeightRequest="40"
+                            CornerRadius="12"
+                            Clicked="OnPassClicked" />
+
+                    <Button Grid.Column="1"
+                            x:Name="FinishBtn"
+                            Text="Продано!"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            FontSize="13"
+                            HeightRequest="40"
+                            CornerRadius="12"
+                            Clicked="OnFinishClicked">
+                        <Button.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#27283d" Offset="0.1" />
+                                <GradientStop Color="#575a89" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>

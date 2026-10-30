@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MonopolyBank.Controls"
+             x:Class="MonopolyBank.Views.PopUpCompanyPlayer"
+             BackgroundColor="#80000000">
+
+    <Grid>
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnBackdropTapped" />
+        </Grid.GestureRecognizers>
+
+        <Border VerticalOptions="Center"
+                HorizontalOptions="Center"
+                WidthRequest="310"
+                BackgroundColor="White"
+                StrokeShape="{RoundRectangle CornerRadius=20}"
+                Padding="18,18"
+                StrokeThickness="0">
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="4,10" Radius="25" Opacity="0.4"/>
+            </Border.Shadow>
+
+            <ScrollView MaximumHeightRequest="560">
+                <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
+                    <!-- Pay Rent Action Button -->
+                    <Button x:Name="PayRentBtn"
+                            Text="Оплатить аренду"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            CornerRadius="14"
+                            HeightRequest="46"
+                            WidthRequest="260"
+                            Clicked="OnPayRentClicked">
+                        <Button.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#fd6244" Offset="0.1" />
+                                <GradientStop Color="#e73d60" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </Button.Background>
+                        <Button.Shadow>
+                            <Shadow Brush="Black" Offset="2,5" Radius="10" Opacity="0.3"/>
+                        </Button.Shadow>
+                    </Button>
+
+                    <!-- Owner Banner -->
+                    <Border StrokeShape="{RoundRectangle CornerRadius=12}"
+                            StrokeThickness="0"
+                            Padding="8,6"
+                            WidthRequest="260">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#55b155" Offset="0.1" />
+                                <GradientStop Color="#3b7d3b" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Grid ColumnDefinitions="40,*" ColumnSpacing="10" VerticalOptions="Center">
+                            <Border Grid.Column="0"
+                                    WidthRequest="38"
+                                    HeightRequest="38"
+                                    StrokeShape="{RoundRectangle CornerRadius=6}"
+                                    BackgroundColor="White"
+                                    StrokeThickness="0">
+                                <Image Source="user.png"
+                                       HeightRequest="32"
+                                       WidthRequest="32"
+                                       Aspect="AspectFit"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center" />
+                            </Border>
+
+                            <Label Grid.Column="1"
+                                   x:Name="OwnerLabel"
+                                   Text="Собственность игрока"
+                                   TextColor="White"
+                                   FontSize="15"
+                                   FontAttributes="Bold"
+                                   VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+
+                    <!-- Physical Monopoly Deed Card -->
+                    <controls:CompanyCardView BindingContext="{Binding .}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </ScrollView>
+        </Border>
+    </Grid>
+
+</ContentPage>

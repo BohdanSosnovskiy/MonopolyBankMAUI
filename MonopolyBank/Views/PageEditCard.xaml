@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MonopolyBank.Controls"
+             x:Class="MonopolyBank.Views.PageEditCard"
+             BackgroundColor="#0e1017"
+             Title="Редактирование карточки">
+
+    <Grid RowDefinitions="*,Auto" Padding="16,12">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Spacing="16" MaximumWidthRequest="480" HorizontalOptions="Center">
+                
+                <!-- Realistic Full-sized Card Preview -->
+                <Border HeightRequest="280"
+                        WidthRequest="195"
+                        StrokeShape="{RoundRectangle CornerRadius=20}"
+                        StrokeThickness="0"
+                        HorizontalOptions="Center"
+                        Margin="0,4,0,8">
+                    <controls:CompanyCardView x:Name="CardPreview" />
+                </Border>
+
+                <!-- General Info Box -->
+                <Border BackgroundColor="#181a24"
+                        StrokeShape="{RoundRectangle CornerRadius=16}"
+                        StrokeThickness="1"
+                        Padding="16,14">
+                    <Border.Stroke>
+                        <SolidColorBrush Color="#2c2e3d" />
+                    </Border.Stroke>
+
+                    <VerticalStackLayout Spacing="12">
+                        <!-- Name -->
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="НАЗВАНИЕ УЛИЦЫ / АКТИВА" TextColor="#888" FontSize="11" FontAttributes="Bold" />
+                            <Entry x:Name="NameEntry"
+                                   TextColor="White"
+                                   FontSize="15"
+                                   FontAttributes="Bold"
+                                   BackgroundColor="#222533"
+                                   TextChanged="OnFieldChanged" />
+                        </VerticalStackLayout>
+
+                        <!-- Color Picker -->
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="ЦВЕТ ГРУППЫ" TextColor="#888" FontSize="11" FontAttributes="Bold" />
+                            <FlexLayout Wrap="Wrap" JustifyContent="SpaceBetween" AlignItems="Center">
+                                <Button Text="" BackgroundColor="#8B4513" HeightRequest="36" WidthRequest="36" CornerRadius="18" Clicked="OnColorSelected" CommandParameter="#8B4513" Margin="2" />
+                                <Button Text="" BackgroundColor="#87CEEB" HeightRequest="36" WidthRequest="36" CornerRadius="18" Clicked="OnColorSelected" CommandParameter="#87CEEB" Margin="2" />
+                                <Button Text="" BackgroundColor="#FF69B4" HeightRequest="36" WidthRequest="36" CornerRadius="18" Clicked="OnColorSelected" CommandParameter="#FF69B4" Margin="2" />
+                                <Button Text="" BackgroundColor="#FFA500" HeightRequest="36" WidthRequest="36" CornerRadius="18" Clicked="OnColorSelected" CommandParameter="#FFA500" Margin="2" />
+                                <Button Text="" BackgroundColor="#FF0000" HeightRequest="36" WidthRequest="36" CornerRadius="18" Clicked="OnColorSelected" CommandParameter="#FF0000" Margin="2" />
+                                <Button Text="" BackgroundColor="#FFD700" HeightRequest="36" WidthRequest="36" CornerRadius="18" Clicked="OnColorSelected" CommandParameter="#FFD700" Margin="2" />
+                                <Button Text="" BackgroundColor="#228B22" HeightRequest="36" WidthRequest="36" CornerRadius="18" Clicked="OnColorSelected" CommandParameter="#228B22" Margin="2" />
+                                <Button Text="" BackgroundColor="#0000CD" HeightRequest="36" WidthRequest="36" CornerRadius="18" Clicked="OnColorSelected" CommandParameter="#0000CD" Margin="2" />
+                                <Button Text="" BackgroundColor="#555555" HeightRequest="36" WidthRequest="36" CornerRadius="18" Clicked="OnColorSelected" CommandParameter="#555555" Margin="2" />
+                            </FlexLayout>
+                        </VerticalStackLayout>
+
+                        <!-- Price and Group Count -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                <Label Text="ЦЕНА ($)" TextColor="#888" FontSize="11" FontAttributes="Bold" />
+                                <Entry x:Name="PriceEntry"
+                                       Keyboard="Numeric"
+                                       TextColor="White"
+                                       FontSize="15"
+                                       FontAttributes="Bold"
+                                       BackgroundColor="#222533"
+                                       TextChanged="OnPriceChanged" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1" Spacing="4">
+                                <Label Text="В ГРУППЕ (ШТ)" TextColor="#888" FontSize="11" FontAttributes="Bold" />
+                                <Entry x:Name="GroupCountEntry"
+                                       Keyboard="Numeric"
+                                       TextColor="White"
+                                       FontSize="15"
+                                       FontAttributes="Bold"
+                                       BackgroundColor="#222533" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- NFC Connection Box -->
+                <Border BackgroundColor="#181a24"
+                        StrokeShape="{RoundRectangle CornerRadius=16}"
+                        StrokeThickness="1"
+                        Padding="16,14">
+                    <Border.Stroke>
+                        <SolidColorBrush Color="#2c2e3d" />
+                    </Border.Stroke>
+
+                    <VerticalStackLayout Spacing="8">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Grid.Column="0" Text="NFC МЕТКА КАРТОЧКИ" TextColor="#888" FontSize="11" FontAttributes="Bold" VerticalOptions="Center" />
+                            <Button Grid.Column="1"
+                                    Text="📱 Считать с метки"
+                                    FontSize="11"
+                                    FontAttributes="Bold"
+                                    TextColor="White"
+                                    BackgroundColor="#0daaa3"
+                                    HeightRequest="32"
+                                    CornerRadius="8"
+                                    Clicked="OnScanNfcClicked" />
+                        </Grid>
+                        <Entry x:Name="NfcMarkerEntry"
+                               TextColor="#0daaa3"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               BackgroundColor="#222533"
+                               Placeholder="Текст или UID метки" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Rents Details Box -->
+                <Border BackgroundColor="#181a24"
+                        StrokeShape="{RoundRectangle CornerRadius=16}"
+                        StrokeThickness="1"
+                        Padding="16,14">
+                    <Border.Stroke>
+                        <SolidColorBrush Color="#2c2e3d" />
+                    </Border.Stroke>
+
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="ТАБЛИЦА АРЕНДЫ (АВТОРАСЧЕТ)" TextColor="#888" FontSize="11" FontAttributes="Bold" />
+                        
+                        <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto" ColumnSpacing="8" RowSpacing="8">
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
+                                <Label Text="Базовая" TextColor="#aaa" FontSize="10" />
+                                <Entry x:Name="Rent0Entry" Keyboard="Numeric" TextColor="White" FontSize="13" BackgroundColor="#222533" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="2">
+                                <Label Text="1 филиал" TextColor="#aaa" FontSize="10" />
+                                <Entry x:Name="Rent1Entry" Keyboard="Numeric" TextColor="White" FontSize="13" BackgroundColor="#222533" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="2" Spacing="2">
+                                <Label Text="2 филиала" TextColor="#aaa" FontSize="10" />
+                                <Entry x:Name="Rent2Entry" Keyboard="Numeric" TextColor="White" FontSize="13" BackgroundColor="#222533" />
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="2">
+                                <Label Text="3 филиала" TextColor="#aaa" FontSize="10" />
+                                <Entry x:Name="Rent3Entry" Keyboard="Numeric" TextColor="White" FontSize="13" BackgroundColor="#222533" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="2">
+                                <Label Text="Корпорация" TextColor="#aaa" FontSize="10" />
+                                <Entry x:Name="Rent4Entry" Keyboard="Numeric" TextColor="White" FontSize="13" BackgroundColor="#222533" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="2" Spacing="2">
+                                <Label Text="Залог ($)" TextColor="#aaa" FontSize="10" />
+                                <Entry x:Name="DepositEntry" Keyboard="Numeric" TextColor="White" FontSize="13" BackgroundColor="#222533" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Save Button Bottom -->
+        <Button Grid.Row="1"
+                Text="💾 Сохранить изменения"
+                TextColor="White"
+                FontAttributes="Bold"
+                FontSize="15"
+                HeightRequest="50"
+                CornerRadius="14"
+                Clicked="OnSaveClicked"
+                Margin="0,10,0,4">
+            <Button.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#0daaa3" Offset="0.0" />
+                    <GradientStop Color="#019dce" Offset="1.0" />
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+    </Grid>
+
+</ContentPage>

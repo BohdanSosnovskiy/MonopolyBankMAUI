@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:MonopolyBank.Models"
+             x:Class="MonopolyBank.Views.PopUpSelfProfile"
+             BackgroundColor="Transparent"
+             Title="PopUpSelfProfile">
+
+    <Grid>
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnBackdropTapped" />
+        </Grid.GestureRecognizers>
+
+        <Border VerticalOptions="Center"
+                HorizontalOptions="Fill"
+                Margin="20"
+                BackgroundColor="White"
+                StrokeShape="{RoundRectangle CornerRadius=20}"
+                Padding="0"
+                StrokeThickness="0">
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="0,8" Radius="22" Opacity="0.4"/>
+            </Border.Shadow>
+
+            <Grid RowDefinitions="44,Auto,*,Auto,Auto" Padding="0,0,0,16" MaximumHeightRequest="580">
+
+                <!-- 1. Header -->
+                <Border Grid.Row="0"
+                        HeightRequest="44"
+                        StrokeShape="{RoundRectangle CornerRadius='20,20,0,0'}"
+                        StrokeThickness="0">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#27283d" Offset="0.1" />
+                            <GradientStop Color="#575a89" Offset="1.0" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <Label Text="Мой профиль"
+                           FontSize="18"
+                           TextColor="White"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"/>
+                </Border>
+
+                <!-- 2. Profile Summary Info -->
+                <Grid Grid.Row="1" ColumnDefinitions="Auto,*" Padding="18,14,18,10" ColumnSpacing="14">
+                    <Image Grid.Column="0"
+                           Source="user.png"
+                           WidthRequest="64"
+                           HeightRequest="64"
+                           Aspect="AspectFit"
+                           VerticalOptions="Center" />
+
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="3">
+                        <Label x:Name="PlayerNameLabel"
+                               Text="Игрок"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="#111111"/>
+
+                        <HorizontalStackLayout Spacing="6">
+                            <Label Text="Баланс:" TextColor="#666666" FontSize="15" VerticalOptions="Center"/>
+                            <Label x:Name="PlayerCashLabel" Text="0 $" TextColor="#2e7d32" FontSize="18" FontAttributes="Bold" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+
+                        <Label x:Name="PlayerCompaniesCountLabel"
+                               Text="Предприятий: 0"
+                               TextColor="#888888"
+                               FontSize="13"/>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- 3. Transaction History for Current Player -->
+                <VerticalStackLayout Grid.Row="2" Spacing="6" Padding="18,4,18,8">
+                    <Label Text="История транзакций"
+                           FontAttributes="Bold"
+                           FontSize="14"
+                           TextColor="#555555"/>
+
+                    <Border Stroke="#e0e0e0"
+                            StrokeThickness="1"
+                            BackgroundColor="#fafafa"
+                            StrokeShape="RoundRectangle 10"
+                            Padding="8"
+                            HeightRequest="190">
+                        <CollectionView x:Name="HistoryList">
+                            <CollectionView.EmptyView>
+                                <Label Text="Транзакций пока нет"
+                                       TextColor="#999999"
+                                       FontSize="13"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"
+                                       Margin="0,40"/>
+                            </CollectionView.EmptyView>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:History">
+                                    <Grid ColumnDefinitions="Auto,*,Auto" Padding="6,6" ColumnSpacing="10">
+                                        <Image Grid.Column="0"
+                                               Source="{Binding name_img}"
+                                               WidthRequest="28"
+                                               HeightRequest="28"
+                                               Aspect="AspectFit"
+                                               VerticalOptions="Center"/>
+
+                                        <Label Grid.Column="1"
+                                               Text="{Binding Text}"
+                                               TextColor="#333333"
+                                               FontSize="12"
+                                               VerticalOptions="Center"
+                                               LineBreakMode="TailTruncation"
+                                               MaxLines="2"/>
+
+                                        <Label Grid.Column="2"
+                                               Text="{Binding Cash, StringFormat='{0} $'}"
+                                               TextColor="#e73d60"
+                                               FontAttributes="Bold"
+                                               FontSize="12"
+                                               VerticalOptions="Center"
+                                               IsVisible="{Binding isVisibleCash}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- 4. Action Buttons -->
+                <Grid Grid.Row="3" ColumnDefinitions="*,*" ColumnSpacing="12" Padding="18,8,18,4">
+                    <Button Grid.Column="0"
+                            Text="Закрыть"
+                            Clicked="OnCloseClicked"
+                            TextColor="#555555"
+                            FontAttributes="Bold"
+                            FontSize="15"
+                            BackgroundColor="#e8ecef"
+                            CornerRadius="12"
+                            HeightRequest="44"/>
+
+                    <Button Grid.Column="1"
+                            x:Name="SurrenderBtn"
+                            Text="Сдаться"
+                            Clicked="OnSurrenderClicked"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            FontSize="15"
+                            CornerRadius="12"
+                            HeightRequest="44">
+                        <Button.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#d32f2f" Offset="0.0" />
+                                <GradientStop Color="#9a0007" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </Button.Background>
+                        <Button.Shadow>
+                            <Shadow Brush="Black" Offset="0,3" Radius="6" Opacity="0.3"/>
+                        </Button.Shadow>
+                    </Button>
+                </Grid>
+
+                <!-- 5. End Game / Leave Room Button -->
+                <Button Grid.Row="4"
+                        x:Name="EndGameBtn"
+                        Text="Завершить игру"
+                        Clicked="OnEndGameClicked"
+                        TextColor="#d32f2f"
+                        FontAttributes="Bold"
+                        FontSize="14"
+                        BackgroundColor="Transparent"
+                        BorderColor="#d32f2f"
+                        BorderWidth="1.5"
+                        CornerRadius="12"
+                        HeightRequest="40"
+                        Margin="18,4,18,0"/>
+
+            </Grid>
+        </Border>
+    </Grid>
+
+</ContentPage>

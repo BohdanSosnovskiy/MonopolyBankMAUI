@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:MonopolyBank.Controls"
+             x:Class="MonopolyBank.Views.PopUpEditCard"
+             BackgroundColor="#80000000">
+
+    <Grid>
+        <Border VerticalOptions="Center"
+                HorizontalOptions="Center"
+                WidthRequest="330"
+                MaximumHeightRequest="600"
+                BackgroundColor="#161822"
+                StrokeShape="{RoundRectangle CornerRadius=22}"
+                Padding="16"
+                StrokeThickness="0">
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="4,10" Radius="25" Opacity="0.5"/>
+            </Border.Shadow>
+
+            <ScrollView>
+                <VerticalStackLayout Spacing="10">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="РЕДАКТОР КАРТОЧКИ"
+                               TextColor="White"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center" />
+                        <Button Grid.Column="1"
+                                Text="✕"
+                                TextColor="#999"
+                                BackgroundColor="Transparent"
+                                FontSize="18"
+                                Padding="0"
+                                HeightRequest="32"
+                                WidthRequest="32"
+                                Clicked="OnCloseClicked" />
+                    </Grid>
+
+                    <!-- Mini Live Preview -->
+                    <Border HeightRequest="160"
+                            StrokeShape="{RoundRectangle CornerRadius=14}"
+                            StrokeThickness="0"
+                            HorizontalOptions="Center"
+                            WidthRequest="130"
+                            Margin="0,4">
+                        <controls:CompanyCardView x:Name="CardPreview" />
+                    </Border>
+
+                    <!-- Name -->
+                    <Label Text="Название улицы:" TextColor="#aaa" FontSize="11" Margin="2,0,0,0" />
+                    <Entry x:Name="NameEntry" TextColor="White" BackgroundColor="#222533" />
+
+                    <!-- Price & Group -->
+                    <Grid ColumnDefinitions="*,*">
+                        <VerticalStackLayout Grid.Column="0" Spacing="2" Margin="0,0,4,0">
+                            <Label Text="Цена покупки ($):" TextColor="#aaa" FontSize="11" />
+                            <Entry x:Name="PriceEntry" Keyboard="Numeric" TextColor="White" BackgroundColor="#222533" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="2" Margin="4,0,0,0">
+                            <Label Text="В группе (шт):" TextColor="#aaa" FontSize="11" />
+                            <Entry x:Name="GroupCountEntry" Keyboard="Numeric" TextColor="White" BackgroundColor="#222533" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <!-- Color Picker Buttons -->
+                    <Label Text="Цвет группы:" TextColor="#aaa" FontSize="11" Margin="2,2,0,0" />
+                    <HorizontalStackLayout Spacing="6" HorizontalOptions="Center">
+                        <Button Text="" BackgroundColor="#8B4513" HeightRequest="28" WidthRequest="28" CornerRadius="14" Clicked="OnColorSelected" CommandParameter="#8B4513" />
+                        <Button Text="" BackgroundColor="#87CEEB" HeightRequest="28" WidthRequest="28" CornerRadius="14" Clicked="OnColorSelected" CommandParameter="#87CEEB" />
+                        <Button Text="" BackgroundColor="#FF69B4" HeightRequest="28" WidthRequest="28" CornerRadius="14" Clicked="OnColorSelected" CommandParameter="#FF69B4" />
+                        <Button Text="" BackgroundColor="#FFA500" HeightRequest="28" WidthRequest="28" CornerRadius="14" Clicked="OnColorSelected" CommandParameter="#FFA500" />
+                        <Button Text="" BackgroundColor="#FF0000" HeightRequest="28" WidthRequest="28" CornerRadius="14" Clicked="OnColorSelected" CommandParameter="#FF0000" />
+                        <Button Text="" BackgroundColor="#FFD700" HeightRequest="28" WidthRequest="28" CornerRadius="14" Clicked="OnColorSelected" CommandParameter="#FFD700" />
+                        <Button Text="" BackgroundColor="#228B22" HeightRequest="28" WidthRequest="28" CornerRadius="14" Clicked="OnColorSelected" CommandParameter="#228B22" />
+                        <Button Text="" BackgroundColor="#0000CD" HeightRequest="28" WidthRequest="28" CornerRadius="14" Clicked="OnColorSelected" CommandParameter="#0000CD" />
+                    </HorizontalStackLayout>
+
+                    <!-- NFC Marker -->
+                    <Label Text="NFC Метка (текст или токен):" TextColor="#aaa" FontSize="11" Margin="2,2,0,0" />
+                    <Entry x:Name="NfcMarkerEntry" TextColor="#0daaa3" FontAttributes="Bold" BackgroundColor="#222533" />
+
+                    <!-- Save Button -->
+                    <Button Text="Сохранить карточку"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            FontSize="14"
+                            HeightRequest="44"
+                            CornerRadius="12"
+                            BackgroundColor="#0daaa3"
+                            Clicked="OnSaveCardClicked"
+                            Margin="0,8,0,0" />
+                </VerticalStackLayout>
+            </ScrollView>
+        </Border>
+    </Grid>
+
+</ContentPage>
