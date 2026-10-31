@@ -25,7 +25,7 @@
                         </LinearGradientBrush>
                     </Border.Background>
                     <Border.Shadow>
-                        <Shadow Brush="Black" Offset="4,10" Radius="25" Opacity="0.4" />
+                        <Shadow Brush="Black" Offset="2,6" Radius="10" Opacity="0.35" />
                     </Border.Shadow>
 
                     <Border.GestureRecognizers>
@@ -48,7 +48,7 @@
                                 </LinearGradientBrush>
                             </Border.Background>
                             <Border.Shadow>
-                                <Shadow Brush="Black" Offset="2,4" Radius="10" Opacity="0.4" />
+                                <Shadow Brush="Black" Offset="1,2" Radius="4" Opacity="0.3" />
                             </Border.Shadow>
                             <Label Text="{Binding CurrentUser.Name}"
                                    TextColor="White"
@@ -91,7 +91,7 @@
                                              VerticalOptions="End"
                                              Margin="20,0,0,16"
                                              Spacing="2">
-                            <Label Text="Сумма на баллансе"
+                            <Label Text="Сумма на балансе"
                                    TextColor="White"
                                    FontSize="16"
                                    Opacity="0.9" />
@@ -107,7 +107,7 @@
             <!-- 2. Section "Ваши активы" (Teal container) -->
             <VerticalStackLayout>
                 <!-- Section Header -->
-                <Border HeightRequest="44"
+                <Border HeightRequest="50"
                         StrokeShape="{RoundRectangle CornerRadius='14,14,0,0'}"
                         StrokeThickness="0">
                     <Border.Background>
@@ -116,7 +116,7 @@
                             <GradientStop Color="#0daaa3" Offset="1.0" />
                         </LinearGradientBrush>
                     </Border.Background>
-                    <Grid ColumnDefinitions="*,Auto" Margin="20,0,16,0" VerticalOptions="Center">
+                    <Grid ColumnDefinitions="*,Auto" Margin="20,0,14,0" VerticalOptions="Center">
                         <Label Grid.Column="0"
                                Text="Ваши активы"
                                TextColor="White"
@@ -125,17 +125,28 @@
                                VerticalOptions="Center" />
 
                         <!-- Quick Card / Field Search Button -->
-                        <Button Grid.Column="1"
-                                Text="🔍 Выбрать поле"
-                                FontSize="12"
-                                FontAttributes="Bold"
-                                TextColor="White"
-                                BackgroundColor="#161824"
-                                CornerRadius="10"
-                                HeightRequest="32"
-                                Padding="10,0"
-                                VerticalOptions="Center"
-                                Clicked="OnOpenCardPickerClicked" />
+                        <Border Grid.Column="1"
+                                BackgroundColor="White"
+                                StrokeShape="{RoundRectangle CornerRadius=16}"
+                                StrokeThickness="0"
+                                HeightRequest="34"
+                                Padding="12,0"
+                                VerticalOptions="Center">
+                            <Border.Shadow>
+                                <Shadow Brush="Black" Offset="1,2" Radius="4" Opacity="0.2" />
+                            </Border.Shadow>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnOpenCardPickerClicked" />
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                                <Label Text="🔍" FontSize="13" VerticalOptions="Center" />
+                                <Label Text="Выбрать поле"
+                                       FontSize="13"
+                                       FontAttributes="Bold"
+                                       TextColor="#00796B"
+                                       VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                        </Border>
                     </Grid>
                 </Border>
 
@@ -187,9 +198,9 @@
                 </Border>
 
                 <!-- Players Horizontal List -->
-                <Grid HeightRequest="215" BackgroundColor="White">
+                <Grid HeightRequest="225" BackgroundColor="White">
                     <CollectionView ItemsSource="{Binding Users}"
-                                    HeightRequest="205"
+                                    HeightRequest="215"
                                     VerticalOptions="Center">
                         <CollectionView.ItemsLayout>
                             <LinearItemsLayout Orientation="Horizontal" ItemSpacing="14" />
@@ -198,13 +209,13 @@
                             <DataTemplate x:DataType="models:User">
                                 <Grid Padding="12,10,6,15">
                                     <Border WidthRequest="165"
-                                            HeightRequest="180"
+                                            HeightRequest="188"
                                             StrokeShape="{RoundRectangle CornerRadius=18}"
                                             StrokeThickness="0"
                                             BackgroundColor="#FBFBFC"
-                                            Padding="10">
+                                            Padding="10,8">
                                         <Border.Shadow>
-                                            <Shadow Brush="Black" Offset="3,6" Radius="15" Opacity="0.18" />
+                                            <Shadow Brush="Black" Offset="2,4" Radius="6" Opacity="0.18" />
                                         </Border.Shadow>
                                         <Grid RowDefinitions="*,Auto,Auto,Auto">
                                             <Image Grid.Row="0"
@@ -230,23 +241,23 @@
                                                    FontSize="16"
                                                    FontAttributes="Bold"
                                                    HorizontalOptions="Center"
-                                                   Margin="0,0,0,2" />
+                                                   Margin="0,0,0,4" />
 
                                             <!-- NFC / No-NFC Badge -->
                                             <Border Grid.Row="3"
                                                     BackgroundColor="{Binding NfcBadgeColor}"
                                                     StrokeShape="{RoundRectangle CornerRadius=6}"
                                                     StrokeThickness="0"
-                                                    Padding="6,2"
+                                                    Padding="8,2"
                                                     HorizontalOptions="Center">
                                                 <Label Text="{Binding NfcBadgeText}"
                                                        TextColor="White"
-                                                       FontSize="9"
+                                                       FontSize="10"
                                                        FontAttributes="Bold" />
                                             </Border>
 
                                             <!-- Bankruptcy Overlay -->
-                                            <Image Grid.RowSpan="3"
+                                            <Image Grid.RowSpan="4"
                                                    Source="bankrot.png"
                                                    Aspect="AspectFit"
                                                    WidthRequest="140"
@@ -288,8 +299,8 @@
                            Margin="20,0,0,0" />
                 </Border>
 
-                <!-- History Items -->
-                <Border StrokeThickness="0" Padding="12,10">
+                <!-- History Items (Using BindableLayout instead of nested CollectionView to prevent scroll conflict & ANR) -->
+                <Border StrokeThickness="0" Padding="12,10" MinimumHeightRequest="140">
                     <Border.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                             <GradientStop Color="#ffd131" Offset="0.1" />
@@ -297,11 +308,11 @@
                         </LinearGradientBrush>
                     </Border.Background>
 
-                    <CollectionView ItemsSource="{Binding Historys}"
-                                    HeightRequest="240">
-                        <CollectionView.ItemTemplate>
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Historys}"
+                                         Spacing="8">
+                        <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="models:History">
-                                <Border Margin="0,4,0,6"
+                                <Border Margin="0,2"
                                         StrokeShape="{RoundRectangle CornerRadius=12}"
                                         StrokeThickness="0"
                                         Padding="10,8">
@@ -312,7 +323,7 @@
                                         </LinearGradientBrush>
                                     </Border.Background>
                                     <Border.Shadow>
-                                        <Shadow Brush="Black" Offset="2,4" Radius="8" Opacity="0.3" />
+                                        <Shadow Brush="Black" Offset="1,3" Radius="4" Opacity="0.25" />
                                     </Border.Shadow>
 
                                     <Grid ColumnDefinitions="45,*,Auto" ColumnSpacing="10">
@@ -341,8 +352,8 @@
                                     </Grid>
                                 </Border>
                             </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
                 </Border>
             </VerticalStackLayout>
 

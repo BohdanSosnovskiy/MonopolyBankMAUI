@@ -102,15 +102,18 @@
                                            FontSize="15"
                                            FontAttributes="Bold"
                                            LineBreakMode="TailTruncation" />
-                                    <HorizontalStackLayout Spacing="8">
-                                        <Label Text="{Binding Price, StringFormat='Цена: {0} $'}"
+                                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                        <Label Grid.Column="0"
+                                               Text="{Binding Price, StringFormat='Цена: {0} $'}"
                                                TextColor="#0daaa3"
                                                FontSize="12"
                                                FontAttributes="Bold" />
-                                        <Label Text="{Binding nfc_marker, StringFormat='NFC: [{0}]'}"
+                                        <Label Grid.Column="1"
+                                               Text="{Binding nfc_marker, StringFormat='NFC: [{0}]'}"
                                                TextColor="#777"
-                                               FontSize="11" />
-                                    </HorizontalStackLayout>
+                                               FontSize="11"
+                                               LineBreakMode="TailTruncation" />
+                                    </Grid>
                                 </VerticalStackLayout>
 
                                 <!-- Edit & NFC Buttons -->

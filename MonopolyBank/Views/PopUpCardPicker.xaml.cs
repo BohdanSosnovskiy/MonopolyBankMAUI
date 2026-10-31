@@ -199,7 +199,6 @@ namespace MonopolyBank.Views
                 filtered = filtered.Where(i => i.Title.ToLowerInvariant().Contains(query) || i.Subtitle.ToLowerInvariant().Contains(query));
             }
 
-            ItemsCollection.ItemsSource = null;
             ItemsCollection.ItemsSource = filtered.ToList();
         }
 
@@ -235,25 +234,13 @@ namespace MonopolyBank.Views
         {
             if (sender is Button btn && btn.CommandParameter is PickerItemViewModel item)
             {
+                // Закрываем текущий диалог выбора карточки
                 await Navigation.PopModalAsync(false);
+                await Task.Delay(100);
 
                 if (item.ItemType == "Company" && item.CompanyRef != null)
                 {
-                    var comp = item.CompanyRef;
-                    var currentUser = GameManager.Instance.CurrentUser;
-
-                    if (string.IsNullOrEmpty(comp.UserName))
-                    {
-                        await Navigation.PushModalAsync(new PopUpCompany(comp), false);
-                    }
-                    else if (comp.UserName == currentUser.Name)
-                    {
-                        await Navigation.PushModalAsync(new PopUpCompanyInfo(comp), false);
-                    }
-                    else
-                    {
-                        await Navigation.PushModalAsync(new PopUpCompanyPlayer(comp), false);
-                    }
+                    await _mainPage.ProcessNfcTagAsync(item.CompanyRef.nfc_marker);
                 }
                 else if (item.ItemType == "Special")
                 {

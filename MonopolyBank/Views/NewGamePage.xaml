@@ -99,6 +99,26 @@
                     </Grid>
                 </Border>
 
+                <!-- Выбор шаблона монополии -->
+                <Label Text="Шаблон монополии" 
+                       FontAttributes="Bold" 
+                       TextColor="#333333" 
+                       FontSize="15"
+                       Margin="0,4,0,0"/>
+                <Border Stroke="#cfd9e5" 
+                        StrokeThickness="1" 
+                        BackgroundColor="#edf2f7" 
+                        StrokeShape="RoundRectangle 12" 
+                        HeightRequest="52" 
+                        Padding="12,0">
+                    <Picker x:Name="PresetPicker"
+                            Title="Выберите шаблон"
+                            TitleColor="#888888"
+                            TextColor="#111111"
+                            VerticalOptions="Center"
+                            SelectedIndexChanged="OnPresetPickerSelectedIndexChanged"/>
+                </Border>
+
                 <Button x:Name="BtnStartGame" 
                         Text="Создать и войти в банк" 
                         Clicked="OnStartNewGame"
@@ -138,7 +158,8 @@
         <Image Grid.Row="1"
                Source="city.png"
                Aspect="AspectFill"
-               HeightRequest="180"
-               HorizontalOptions="Fill" />
+               HeightRequest="100"
+               HorizontalOptions="Fill"
+               InputTransparent="True" />
     </Grid>
 </ContentPage>

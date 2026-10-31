@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:MonopolyBank.Views"
              x:Class="MonopolyBank.Views.PopUpCardPicker"
-             BackgroundColor="#80000000">
+             BackgroundColor="#95000000">
 
-    <Grid>
+    <Grid Padding="16">
         <Border VerticalOptions="Center"
                 HorizontalOptions="Center"
-                WidthRequest="340"
-                MaximumHeightRequest="620"
+                WidthRequest="345"
+                HeightRequest="560"
                 BackgroundColor="#161824"
                 StrokeShape="{RoundRectangle CornerRadius=22}"
                 Padding="16,14"
-                StrokeThickness="0">
+                StrokeThickness="1">
+            <Border.Stroke>
+                <SolidColorBrush Color="#282c3f" />
+            </Border.Stroke>
             <Border.Shadow>
-                <Shadow Brush="Black" Offset="4,10" Radius="25" Opacity="0.5"/>
+                <Shadow Brush="Black" Offset="2,6" Radius="10" Opacity="0.4"/>
             </Border.Shadow>
 
             <Grid RowDefinitions="Auto,Auto,Auto,*,Auto" RowSpacing="10">
                 <!-- Header -->
-                <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
-                    <VerticalStackLayout Grid.Column="0">
+                <Grid Grid.Row="0" ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                    <VerticalStackLayout Grid.Column="0" Spacing="2">
                         <Label Text="ВЫБОР КАРТОЧКИ / ПОЛЯ"
                                TextColor="White"
                                FontSize="16"
@@ -31,12 +35,14 @@
                     </VerticalStackLayout>
                     <Button Grid.Column="1"
                             Text="✕"
-                            TextColor="#999"
-                            BackgroundColor="Transparent"
-                            FontSize="18"
+                            TextColor="#aaa"
+                            BackgroundColor="#222533"
+                            CornerRadius="16"
+                            FontSize="14"
                             Padding="0"
                             HeightRequest="32"
                             WidthRequest="32"
+                            VerticalOptions="Center"
                             Clicked="OnCloseClicked" />
                 </Grid>
 
@@ -60,79 +66,81 @@
                 </Border>
 
                 <!-- Filter Tabs -->
-                <Grid Grid.Row="2" ColumnDefinitions="*,*,*,*" ColumnSpacing="4">
-                    <Button x:Name="TabAllBtn" Grid.Column="0" Text="Все" FontSize="11" FontAttributes="Bold" TextColor="White" BackgroundColor="#0daaa3" HeightRequest="30" CornerRadius="8" Padding="0" Clicked="OnTabAllClicked" />
-                    <Button x:Name="TabStreetsBtn" Grid.Column="1" Text="Улицы" FontSize="11" FontAttributes="Bold" TextColor="#aaa" BackgroundColor="#222533" HeightRequest="30" CornerRadius="8" Padding="0" Clicked="OnTabStreetsClicked" />
-                    <Button x:Name="TabSpecialBtn" Grid.Column="2" Text="Спецполя" FontSize="11" FontAttributes="Bold" TextColor="#aaa" BackgroundColor="#222533" HeightRequest="30" CornerRadius="8" Padding="0" Clicked="OnTabSpecialClicked" />
-                    <Button x:Name="TabCardsBtn" Grid.Column="3" Text="Шанс" FontSize="11" FontAttributes="Bold" TextColor="#aaa" BackgroundColor="#222533" HeightRequest="30" CornerRadius="8" Padding="0" Clicked="OnTabCardsClicked" />
+                <Grid Grid.Row="2" ColumnDefinitions="*,*,*,*" ColumnSpacing="6" Margin="0,0,0,2">
+                    <Button x:Name="TabAllBtn" Grid.Column="0" Text="Все" FontSize="12" FontAttributes="Bold" TextColor="White" BackgroundColor="#0daaa3" HeightRequest="34" CornerRadius="10" Padding="0" Clicked="OnTabAllClicked" />
+                    <Button x:Name="TabStreetsBtn" Grid.Column="1" Text="Улицы" FontSize="12" FontAttributes="Bold" TextColor="#aaa" BackgroundColor="#222533" HeightRequest="34" CornerRadius="10" Padding="0" Clicked="OnTabStreetsClicked" />
+                    <Button x:Name="TabSpecialBtn" Grid.Column="2" Text="Спецполя" FontSize="12" FontAttributes="Bold" TextColor="#aaa" BackgroundColor="#222533" HeightRequest="34" CornerRadius="10" Padding="0" Clicked="OnTabSpecialClicked" />
+                    <Button x:Name="TabCardsBtn" Grid.Column="3" Text="Шанс" FontSize="12" FontAttributes="Bold" TextColor="#aaa" BackgroundColor="#222533" HeightRequest="34" CornerRadius="10" Padding="0" Clicked="OnTabCardsClicked" />
                 </Grid>
 
-                <!-- Cards Collection -->
-                <CollectionView Grid.Row="3"
-                                x:Name="ItemsCollection"
-                                SelectionMode="None">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Border Margin="0,4"
-                                    BackgroundColor="#1c1f2e"
-                                    StrokeShape="{RoundRectangle CornerRadius=12}"
-                                    StrokeThickness="1"
-                                    Padding="10,8">
-                                <Border.Stroke>
-                                    <SolidColorBrush Color="#2c3045" />
-                                </Border.Stroke>
+                <!-- Cards Collection (Clipped container so items never overlap tabs) -->
+                <Grid Grid.Row="3" IsClippedToBounds="True">
+                    <CollectionView x:Name="ItemsCollection"
+                                    SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="views:PickerItemViewModel">
+                                <Border Margin="0,4"
+                                        BackgroundColor="#1c1f2e"
+                                        StrokeShape="{RoundRectangle CornerRadius=12}"
+                                        StrokeThickness="1"
+                                        Padding="10,8">
+                                    <Border.Stroke>
+                                        <SolidColorBrush Color="#2c3045" />
+                                    </Border.Stroke>
 
-                                <Grid ColumnDefinitions="10,*,Auto" ColumnSpacing="10" VerticalOptions="Center">
-                                    <!-- Color Indicator -->
-                                    <Border Grid.Column="0"
-                                            BackgroundColor="{Binding ColorHex}"
-                                            StrokeShape="{RoundRectangle CornerRadius=4}"
-                                            StrokeThickness="0"
-                                            WidthRequest="8"
-                                            HeightRequest="36"
-                                            VerticalOptions="Center" />
+                                    <Grid ColumnDefinitions="10,*,Auto" ColumnSpacing="10" VerticalOptions="Center">
+                                        <!-- Color Indicator -->
+                                        <Border Grid.Column="0"
+                                                BackgroundColor="{Binding ColorHex}"
+                                                StrokeShape="{RoundRectangle CornerRadius=4}"
+                                                StrokeThickness="0"
+                                                WidthRequest="8"
+                                                HeightRequest="36"
+                                                VerticalOptions="Center" />
 
-                                    <!-- Main Info -->
-                                    <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
-                                        <Label Text="{Binding Title}"
-                                               TextColor="White"
-                                               FontSize="14"
-                                               FontAttributes="Bold"
-                                               LineBreakMode="TailTruncation" />
-                                        <Label Text="{Binding Subtitle}"
-                                               TextColor="{Binding SubtitleColor}"
-                                               FontSize="11"
-                                               FontAttributes="Bold"
-                                               LineBreakMode="TailTruncation" />
-                                    </VerticalStackLayout>
+                                        <!-- Main Info -->
+                                        <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                            <Label Text="{Binding Title}"
+                                                   TextColor="White"
+                                                   FontSize="14"
+                                                   FontAttributes="Bold"
+                                                   LineBreakMode="TailTruncation" />
+                                            <Label Text="{Binding Subtitle}"
+                                                   TextColor="{Binding SubtitleColor}"
+                                                   FontSize="11"
+                                                   FontAttributes="Bold"
+                                                   LineBreakMode="TailTruncation" />
+                                        </VerticalStackLayout>
 
-                                    <!-- Action Button -->
-                                    <Button Grid.Column="2"
-                                            Text="{Binding ButtonText}"
-                                            TextColor="White"
-                                            FontSize="11"
-                                            FontAttributes="Bold"
-                                            BackgroundColor="{Binding ButtonColor}"
-                                            CornerRadius="8"
-                                            HeightRequest="32"
-                                            Padding="10,0"
-                                            VerticalOptions="Center"
-                                            Clicked="OnItemActionClicked"
-                                            CommandParameter="{Binding .}" />
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                                        <!-- Action Button -->
+                                        <Button Grid.Column="2"
+                                                Text="{Binding ButtonText}"
+                                                TextColor="White"
+                                                FontSize="12"
+                                                FontAttributes="Bold"
+                                                BackgroundColor="{Binding ButtonColor}"
+                                                CornerRadius="9"
+                                                HeightRequest="34"
+                                                MinimumWidthRequest="78"
+                                                Padding="12,0"
+                                                VerticalOptions="Center"
+                                                Clicked="OnItemActionClicked"
+                                                CommandParameter="{Binding .}" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
 
                 <!-- Close Button -->
                 <Button Grid.Row="4"
                         Text="Закрыть"
-                        TextColor="#aaa"
+                        TextColor="#ccc"
                         BackgroundColor="#222533"
                         FontSize="13"
                         FontAttributes="Bold"
-                        HeightRequest="38"
+                        HeightRequest="40"
                         CornerRadius="10"
                         Clicked="OnCloseClicked" />
             </Grid>

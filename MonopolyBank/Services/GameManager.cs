@@ -398,6 +398,10 @@ namespace MonopolyBank.Services
                     if (hist != null)
                     {
                         Historys.Insert(0, hist);
+                        while (Historys.Count > 25)
+                        {
+                            Historys.RemoveAt(Historys.Count - 1);
+                        }
                     }
                     break;
 
@@ -640,6 +644,10 @@ namespace MonopolyBank.Services
                 Cash = cash,
                 isVisibleCash = isVisibleCash
             });
+            while (Historys.Count > 25)
+            {
+                Historys.RemoveAt(Historys.Count - 1);
+            }
         }
 
         public async Task BroadcastGameOverAsync(string userId)

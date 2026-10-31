@@ -160,8 +160,9 @@ namespace MonopolyBank.Views
             }
         }
 
-        private async void OnOpenCardPickerClicked(object sender, EventArgs e)
+        private async void OnOpenCardPickerClicked(object? sender, EventArgs e)
         {
+            if (Navigation.ModalStack.OfType<PopUpCardPicker>().Any()) return;
             await Navigation.PushModalAsync(new PopUpCardPicker(this), false);
         }
 
@@ -245,11 +246,13 @@ namespace MonopolyBank.Views
 
         private void InitNfc()
         {
+            if (GameManager.Instance.CurrentUser.IsNoNfc) return;
 #if ANDROID || IOS
             try
             {
                 if (CrossNFC.Current.IsAvailable && CrossNFC.Current.IsEnabled)
                 {
+                    CrossNFC.Current.OnMessageReceived -= OnNfcMessageReceived;
                     CrossNFC.Current.OnMessageReceived += OnNfcMessageReceived;
                     CrossNFC.Current.StartListening();
                 }

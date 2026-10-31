@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:MonopolyBank.Views"
              x:Class="MonopolyBank.Views.PagePresetList"
              BackgroundColor="#0e1017"
              Title="Мои Монополии">
@@ -65,7 +66,7 @@
                         x:Name="PresetsCollection"
                         SelectionMode="None">
             <CollectionView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="views:PresetItemViewModel">
                     <Border Margin="0,5"
                             BackgroundColor="#161824"
                             StrokeShape="{RoundRectangle CornerRadius=16}"
@@ -78,38 +79,45 @@
                         <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
                             <!-- Preset Details -->
                             <VerticalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
-                                <HorizontalStackLayout Spacing="8">
-                                    <Label Text="{Binding Preset.Name}"
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                    <Label Grid.Column="0"
+                                           Text="{Binding Preset.Name}"
                                            TextColor="White"
                                            FontSize="15"
                                            FontAttributes="Bold"
-                                           LineBreakMode="TailTruncation" />
+                                           LineBreakMode="TailTruncation"
+                                           VerticalOptions="Center" />
                                     <!-- Built-in Badge -->
-                                    <Border IsVisible="{Binding Preset.IsBuiltIn}"
+                                    <Border Grid.Column="1"
+                                            IsVisible="{Binding Preset.IsBuiltIn}"
                                             BackgroundColor="#27283d"
                                             StrokeShape="{RoundRectangle CornerRadius=6}"
                                             StrokeThickness="0"
-                                            Padding="6,2">
+                                            Padding="6,2"
+                                            VerticalOptions="Center">
                                         <Label Text="Оригинал"
                                                TextColor="#0daaa3"
                                                FontSize="10"
                                                FontAttributes="Bold" />
                                     </Border>
-                                </HorizontalStackLayout>
+                                </Grid>
 
                                 <Label Text="{Binding Preset.Description}"
                                        TextColor="#999"
                                        FontSize="11"
                                        LineBreakMode="TailTruncation" />
 
-                                <HorizontalStackLayout Spacing="8">
-                                    <Label Text="{Binding Preset.Companies.Count, StringFormat='Карточек: {0}'}"
+                                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                    <Label Grid.Column="0"
+                                           Text="{Binding Preset.Companies.Count, StringFormat='Карточек: {0}'}"
                                            TextColor="#777"
                                            FontSize="10" />
-                                    <Label Text="{Binding Preset.Author, StringFormat='• {0}'}"
+                                    <Label Grid.Column="1"
+                                           Text="{Binding Preset.Author, StringFormat='• {0}'}"
                                            TextColor="#0daaa3"
-                                           FontSize="10" />
-                                </HorizontalStackLayout>
+                                           FontSize="10"
+                                           LineBreakMode="TailTruncation" />
+                                </Grid>
                             </VerticalStackLayout>
 
                             <!-- Actions -->
@@ -134,6 +142,7 @@
                                         CornerRadius="10"
                                         HeightRequest="36"
                                         WidthRequest="36"
+                                        Padding="0"
                                         Clicked="OnEditPresetClicked"
                                         CommandParameter="{Binding Preset}" />
                             </HorizontalStackLayout>

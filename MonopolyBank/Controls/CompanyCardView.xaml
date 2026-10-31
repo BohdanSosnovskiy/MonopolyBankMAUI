@@ -17,7 +17,7 @@
             </LinearGradientBrush>
         </Border.Background>
         <Border.Shadow>
-            <Shadow Brush="Black" Offset="4,8" Radius="15" Opacity="0.5" />
+            <Shadow Brush="Black" Offset="2,5" Radius="6" Opacity="0.35" />
         </Border.Shadow>
 
         <Grid>

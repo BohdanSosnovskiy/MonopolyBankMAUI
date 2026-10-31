@@ -33,23 +33,28 @@
                             <SolidColorBrush Color="#282a38" />
                         </Border.Stroke>
 
-                        <Grid ColumnDefinitions="*,Auto">
-                            <VerticalStackLayout Grid.Column="0" Spacing="4">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                            <VerticalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
                                 <Label Text="{Binding Name}"
                                        TextColor="White"
                                        FontSize="16"
-                                       FontAttributes="Bold" />
+                                       FontAttributes="Bold"
+                                       LineBreakMode="TailTruncation" />
                                 <Label Text="{Binding Description}"
                                        TextColor="#aaa"
-                                       FontSize="12" />
-                                <HorizontalStackLayout Spacing="10">
-                                    <Label Text="{Binding Author, StringFormat='Автор: {0}'}"
+                                       FontSize="12"
+                                       LineBreakMode="TailTruncation" />
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                                    <Label Grid.Column="0"
+                                           Text="{Binding Author, StringFormat='Автор: {0}'}"
                                            TextColor="#0daaa3"
-                                           FontSize="11" />
-                                    <Label Text="{Binding Companies.Count, StringFormat='Улиц: {0}'}"
+                                           FontSize="11"
+                                           LineBreakMode="TailTruncation" />
+                                    <Label Grid.Column="1"
+                                           Text="{Binding Companies.Count, StringFormat='Улиц: {0}'}"
                                            TextColor="#777"
                                            FontSize="11" />
-                                </HorizontalStackLayout>
+                                </Grid>
                             </VerticalStackLayout>
 
                             <!-- Download Button -->
