@@ -50,6 +50,25 @@ namespace MonopolyBank.Models
             }
         }
 
+        private bool _isNoNfc;
+        public bool IsNoNfc
+        {
+            get => _isNoNfc;
+            set
+            {
+                _isNoNfc = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(NfcBadgeText));
+                OnPropertyChanged(nameof(NfcBadgeColor));
+            }
+        }
+
+        [JsonIgnore]
+        public string NfcBadgeText => IsNoNfc ? "📵 Без NFC" : "📱 NFC";
+
+        [JsonIgnore]
+        public Color NfcBadgeColor => IsNoNfc ? Color.FromArgb("#8e2de2") : Color.FromArgb("#0daaa3");
+
         public ObservableCollection<Company> Companys { get; set; } = new();
         public string ImgPath { get; set; } = "user.png";
 

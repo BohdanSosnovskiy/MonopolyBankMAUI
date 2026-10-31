@@ -17,6 +17,7 @@ namespace MonopolyBank.Views
             }
             var savedName = Preferences.Get("ClientPlayerName", "Игрок 2");
             Username.Text = savedName;
+            NoNfcCheckBox.IsChecked = Preferences.Get("PlayWithoutNfc", false);
         }
 
         protected override void OnAppearing()
@@ -91,10 +92,13 @@ namespace MonopolyBank.Views
             Preferences.Set("LastHostIp", ip);
             Preferences.Set("ClientPlayerName", name);
 
+            bool isNoNfc = NoNfcCheckBox.IsChecked;
+            Preferences.Set("PlayWithoutNfc", isNoNfc);
+
             BtnJoin.IsEnabled = false;
             BtnJoin.Text = "Подключение...";
 
-            bool success = await GameManager.Instance.JoinGameAsync(ip, name);
+            bool success = await GameManager.Instance.JoinGameAsync(ip, name, isNoNfc);
             if (success)
             {
                 await Navigation.PushAsync(new GameMainPage());

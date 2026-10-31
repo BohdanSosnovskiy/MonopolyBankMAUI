@@ -121,7 +121,7 @@ namespace MonopolyBank.Services
 
         private UdpBeaconHost? _beaconHost;
 
-        public async Task StartHostGameAsync(string username, int initialCash, int passGoCash)
+        public async Task StartHostGameAsync(string username, int initialCash, int passGoCash, bool isNoNfc = false)
         {
             IsHost = true;
             CountCashStart = initialCash;
@@ -138,7 +138,7 @@ namespace MonopolyBank.Services
 
             ResetGameData();
 
-            CurrentUser = new User(username, initialCash);
+            CurrentUser = new User(username, initialCash) { IsNoNfc = isNoNfc };
             Users.Add(CurrentUser);
 
             Server = new GameServer();
@@ -150,10 +150,10 @@ namespace MonopolyBank.Services
 
             BackgroundServiceManager.StartHostService();
 
-            AddHistory($"Игра создана хостом {username}", "bank_monopoly_logo.png", 0, false);
+            AddHistory($"Игра создана хостом {username} {(isNoNfc ? "(Без NFC)" : "")}", "bank_monopoly_logo.png", 0, false);
         }
 
-        public async Task<bool> JoinGameAsync(string hostIp, string username)
+        public async Task<bool> JoinGameAsync(string hostIp, string username, bool isNoNfc = false)
         {
             IsHost = false;
 
@@ -168,7 +168,7 @@ namespace MonopolyBank.Services
 
             ResetGameData();
 
-            CurrentUser = new User(username, CountCashStart);
+            CurrentUser = new User(username, CountCashStart) { IsNoNfc = isNoNfc };
             Users.Add(CurrentUser);
 
             bool connected = await Client.ConnectAsync(hostIp);
@@ -180,7 +180,8 @@ namespace MonopolyBank.Services
                 Id = CurrentUser.Id,
                 Name = CurrentUser.Name,
                 Cash = CurrentUser.Cash,
-                isGameOver = CurrentUser.isGameOver
+                isGameOver = CurrentUser.isGameOver,
+                IsNoNfc = CurrentUser.IsNoNfc
             });
 
             await Client.SendPacketAsync(packet);
@@ -217,9 +218,13 @@ namespace MonopolyBank.Services
                     {
                         if (!Users.Any(u => u.Id == userSnapshot.Id))
                         {
-                            var newUser = new User(userSnapshot.Name, userSnapshot.Cash) { Id = userSnapshot.Id };
+                            var newUser = new User(userSnapshot.Name, userSnapshot.Cash) 
+                            { 
+                                Id = userSnapshot.Id,
+                                IsNoNfc = userSnapshot.IsNoNfc
+                            };
                             Users.Add(newUser);
-                            AddHistory($"Игрок {userSnapshot.Name} присоединился к игре", "user.png", 0, false);
+                            AddHistory($"Игрок {userSnapshot.Name} присоединился к игре {(newUser.IsNoNfc ? "(Без NFC)" : "")}", "user.png", 0, false);
                         }
                     });
                 }
@@ -248,7 +253,8 @@ namespace MonopolyBank.Services
                     Id = u.Id,
                     Name = u.Name,
                     Cash = u.Cash,
-                    isGameOver = u.isGameOver
+                    isGameOver = u.isGameOver,
+                    IsNoNfc = u.IsNoNfc
                 }).ToList(),
                 Companys = Companys.Where(c => !string.IsNullOrEmpty(c.UserName)).Select(c => new CompanySnapshot
                 {
@@ -284,7 +290,12 @@ namespace MonopolyBank.Services
                                 var existing = Users.FirstOrDefault(x => x.Id == u.Id);
                                 if (existing == null)
                                 {
-                                    Users.Add(new User(u.Name, u.Cash) { Id = u.Id, isGameOver = u.isGameOver });
+                                    Users.Add(new User(u.Name, u.Cash) 
+                                    { 
+                                        Id = u.Id, 
+                                        isGameOver = u.isGameOver,
+                                        IsNoNfc = u.IsNoNfc
+                                    });
                                 }
                             }
                         }
@@ -315,9 +326,13 @@ namespace MonopolyBank.Services
                     var newUserSnap = packet.GetPayload<UserSnapshot>();
                     if (newUserSnap != null && !Users.Any(u => u.Id == newUserSnap.Id))
                     {
-                        var newUser = new User(newUserSnap.Name, newUserSnap.Cash) { Id = newUserSnap.Id };
+                        var newUser = new User(newUserSnap.Name, newUserSnap.Cash) 
+                        { 
+                            Id = newUserSnap.Id,
+                            IsNoNfc = newUserSnap.IsNoNfc
+                        };
                         Users.Add(newUser);
-                        AddHistory($"Игрок {newUserSnap.Name} вошел в игру", "user.png", 0, false);
+                        AddHistory($"Игрок {newUserSnap.Name} вошел в игру {(newUser.IsNoNfc ? "(Без NFC)" : "")}", "user.png", 0, false);
                     }
                     break;
 

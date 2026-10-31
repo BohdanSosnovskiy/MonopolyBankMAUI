@@ -126,6 +126,29 @@
                         </CollectionView>
                     </Grid>
 
+                    <!-- Action Button: Начислить зарплату за круг (только для Хоста) -->
+                    <Button x:Name="BtnPaySalary"
+                            Text="💰 Начислить зарплату за круг"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            FontSize="14"
+                            CornerRadius="14"
+                            HeightRequest="44"
+                            WidthRequest="280"
+                            Margin="0,4,0,0"
+                            IsVisible="False"
+                            Clicked="OnPaySalaryClicked">
+                        <Button.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="#55b155" Offset="0.1" />
+                                <GradientStop Color="#2e7d32" Offset="1.0" />
+                            </LinearGradientBrush>
+                        </Button.Background>
+                        <Button.Shadow>
+                            <Shadow Brush="Black" Offset="2,4" Radius="8" Opacity="0.3"/>
+                        </Button.Shadow>
+                    </Button>
+
                     <!-- Action Button: Предложить сделку -->
                     <Button x:Name="BtnStartTrade"
                             Text="Предложить сделку"

@@ -116,12 +116,27 @@
                             <GradientStop Color="#0daaa3" Offset="1.0" />
                         </LinearGradientBrush>
                     </Border.Background>
-                    <Label Text="Ваши активы"
-                           TextColor="White"
-                           FontSize="22"
-                           FontAttributes="Bold"
-                           VerticalOptions="Center"
-                           Margin="20,0,0,0" />
+                    <Grid ColumnDefinitions="*,Auto" Margin="20,0,16,0" VerticalOptions="Center">
+                        <Label Grid.Column="0"
+                               Text="Ваши активы"
+                               TextColor="White"
+                               FontSize="22"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center" />
+
+                        <!-- Quick Card / Field Search Button -->
+                        <Button Grid.Column="1"
+                                Text="🔍 Выбрать поле"
+                                FontSize="12"
+                                FontAttributes="Bold"
+                                TextColor="White"
+                                BackgroundColor="#161824"
+                                CornerRadius="10"
+                                HeightRequest="32"
+                                Padding="10,0"
+                                VerticalOptions="Center"
+                                Clicked="OnOpenCardPickerClicked" />
+                    </Grid>
                 </Border>
 
                 <!-- Cards Horizontal List -->
@@ -191,11 +206,11 @@
                                         <Border.Shadow>
                                             <Shadow Brush="Black" Offset="3,6" Radius="15" Opacity="0.18" />
                                         </Border.Shadow>
-                                        <Grid RowDefinitions="*,Auto,Auto">
+                                        <Grid RowDefinitions="*,Auto,Auto,Auto">
                                             <Image Grid.Row="0"
                                                    Source="{Binding ImgPath}"
-                                                   HeightRequest="60"
-                                                   WidthRequest="60"
+                                                   HeightRequest="56"
+                                                   WidthRequest="56"
                                                    Aspect="AspectFit"
                                                    HorizontalOptions="Center"
                                                    VerticalOptions="Center" />
@@ -203,19 +218,32 @@
                                             <Label Grid.Row="1"
                                                    Text="{Binding Name}"
                                                    TextColor="#1A1A1A"
-                                                   FontSize="18"
+                                                   FontSize="16"
                                                    FontAttributes="Bold"
                                                    HorizontalOptions="Center"
                                                    LineBreakMode="TailTruncation"
-                                                   Margin="0,4,0,2" />
+                                                   Margin="0,2,0,1" />
 
                                             <Label Grid.Row="2"
                                                    Text="{Binding Cash, StringFormat='{0} $'}"
                                                    TextColor="#2E7D32"
-                                                   FontSize="18"
+                                                   FontSize="16"
                                                    FontAttributes="Bold"
                                                    HorizontalOptions="Center"
-                                                   Margin="0,0,0,4" />
+                                                   Margin="0,0,0,2" />
+
+                                            <!-- NFC / No-NFC Badge -->
+                                            <Border Grid.Row="3"
+                                                    BackgroundColor="{Binding NfcBadgeColor}"
+                                                    StrokeShape="{RoundRectangle CornerRadius=6}"
+                                                    StrokeThickness="0"
+                                                    Padding="6,2"
+                                                    HorizontalOptions="Center">
+                                                <Label Text="{Binding NfcBadgeText}"
+                                                       TextColor="White"
+                                                       FontSize="9"
+                                                       FontAttributes="Bold" />
+                                            </Border>
 
                                             <!-- Bankruptcy Overlay -->
                                             <Image Grid.RowSpan="3"

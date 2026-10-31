@@ -129,6 +129,22 @@
                            VerticalOptions="Center"/>
                 </Border>
 
+                <!-- Checkbox "Режим без NFC" -->
+                <Border Stroke="#cfd9e5"
+                        StrokeThickness="1"
+                        BackgroundColor="#f4f7fa"
+                        StrokeShape="RoundRectangle 12"
+                        Padding="14,10"
+                        Margin="0,4,0,0">
+                    <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                        <VerticalStackLayout Grid.Column="0" VerticalOptions="Center" Spacing="2">
+                            <Label Text="Режим без NFC" TextColor="#222" FontSize="14" FontAttributes="Bold" />
+                            <Label Text="Выбор карточек и полей вручную на экране" TextColor="#777" FontSize="11" />
+                        </VerticalStackLayout>
+                        <CheckBox Grid.Column="1" x:Name="NoNfcCheckBox" Color="#8e2de2" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
                 <Button x:Name="BtnJoin" 
                         Text="Присоединиться к банку" 
                         Clicked="OnStartJoinGame"

@@ -58,14 +58,51 @@ namespace MonopolyBank.Views
             {
                 if (company.IsEmpty)
                 {
+                    // Если у игрока режим без NFC — сразу открываем окно выбора карточек и действий
+                    if (GameManager.Instance.CurrentUser.IsNoNfc)
+                    {
+                        await Navigation.PushModalAsync(new PopUpCardPicker(this), false);
+                        return;
+                    }
+
                     var choice = await DisplayActionSheet(
-                        "NFC Действие",
+                        "Действие на доске",
                         "Отмена",
                         null,
+                        "🔍 Выбрать поле / карточку (Без NFC)",
+                        "📱 Сканировать NFC метку (iOS)",
                         "Выбрать свободную фирму (Покупка / Аукцион)",
                         $"Поле ВПЕРЕД (+{GameManager.Instance.CountStartSum} $)",
                         "Случайная Казна / Шанс",
                         "Инструкция по NFC");
+
+                    if (choice == "🔍 Выбрать поле / карточку (Без NFC)")
+                    {
+                        await Navigation.PushModalAsync(new PopUpCardPicker(this), false);
+                        return;
+                    }
+
+                    if (choice == "📱 Сканировать NFC метку (iOS)")
+                    {
+#if ANDROID || IOS
+                        try
+                        {
+                            if (CrossNFC.Current.IsAvailable)
+                            {
+                                CrossNFC.Current.StartListening();
+                            }
+                            else
+                            {
+                                await DisplayAlert("NFC", "NFC недоступен на этом устройстве.", "ОК");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            await DisplayAlert("NFC", $"Ошибка запуска сессии NFC: {ex.Message}", "ОК");
+                        }
+#endif
+                        return;
+                    }
 
                     if (choice == "Выбрать свободную фирму (Покупка / Аукцион)")
                     {
@@ -121,6 +158,11 @@ namespace MonopolyBank.Views
             {
                 await Navigation.PushModalAsync(new PopUpInfoUser(player), false);
             }
+        }
+
+        private async void OnOpenCardPickerClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushModalAsync(new PopUpCardPicker(this), false);
         }
 
         private void HandleTradeRequested(string senderId, string senderName)

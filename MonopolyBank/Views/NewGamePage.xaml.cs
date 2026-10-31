@@ -9,6 +9,7 @@ namespace MonopolyBank.Views
             InitializeComponent();
             var savedName = Preferences.Get("HostPlayerName", "Игрок 1");
             Username.Text = savedName;
+            NoNfcCheckBox.IsChecked = Preferences.Get("PlayWithoutNfc", false);
         }
 
         protected override void OnAppearing()
@@ -28,13 +29,16 @@ namespace MonopolyBank.Views
             int.TryParse(CountStartSum.Text, out var passGoCash);
             if (passGoCash <= 0) passGoCash = 200;
 
+            bool isNoNfc = NoNfcCheckBox.IsChecked;
+            Preferences.Set("PlayWithoutNfc", isNoNfc);
+
             BtnStartGame.IsEnabled = false;
             BtnStartGame.Text = "Запуск сервера...";
             StartingLayout.IsVisible = true;
 
             try
             {
-                await GameManager.Instance.StartHostGameAsync(name, startCash, passGoCash);
+                await GameManager.Instance.StartHostGameAsync(name, startCash, passGoCash, isNoNfc);
                 await Navigation.PushAsync(new GameMainPage());
             }
             finally

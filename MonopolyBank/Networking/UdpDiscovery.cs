@@ -102,15 +102,29 @@ namespace MonopolyBank.Networking
                     {
                         foreach (var u in ni.GetIPProperties().UnicastAddresses)
                         {
-                            if (u.Address.AddressFamily == AddressFamily.InterNetwork && u.IPv4Mask != null)
+                            if (u.Address.AddressFamily == AddressFamily.InterNetwork)
                             {
                                 var ipBytes = u.Address.GetAddressBytes();
-                                var maskBytes = u.IPv4Mask.GetAddressBytes();
-                                var bcastBytes = new byte[4];
-                                for (int i = 0; i < 4; i++)
+                                
+                                // На iOS u.IPv4Mask часто null! В таком случае берем стандартную маску /24 (255.255.255.0)
+                                byte[] bcastBytes = new byte[4];
+                                if (u.IPv4Mask != null)
                                 {
-                                    bcastBytes[i] = (byte)(ipBytes[i] | ~maskBytes[i]);
+                                    var maskBytes = u.IPv4Mask.GetAddressBytes();
+                                    for (int i = 0; i < 4; i++)
+                                    {
+                                        bcastBytes[i] = (byte)(ipBytes[i] | ~maskBytes[i]);
+                                    }
                                 }
+                                else
+                                {
+                                    // Стандартный fallback для /24: например 192.168.88.255
+                                    bcastBytes[0] = ipBytes[0];
+                                    bcastBytes[1] = ipBytes[1];
+                                    bcastBytes[2] = ipBytes[2];
+                                    bcastBytes[3] = 255;
+                                }
+
                                 var subnetBcast = new IPAddress(bcastBytes);
                                 try
                                 {

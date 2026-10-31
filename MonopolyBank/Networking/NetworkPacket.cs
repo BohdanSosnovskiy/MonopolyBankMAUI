@@ -73,6 +73,7 @@ namespace MonopolyBank.Networking
         public string Name { get; set; } = string.Empty;
         public int Cash { get; set; }
         public bool isGameOver { get; set; }
+        public bool IsNoNfc { get; set; }
     }
 
     public class CompanySnapshot

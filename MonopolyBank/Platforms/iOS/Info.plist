@@ -12,6 +12,7 @@
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>arm64</string>
+		<string>nfc</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
@@ -26,15 +27,29 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+
+	<!-- Разрешение на поиск устройств в локальной сети Wi-Fi (iOS 14+) -->
 	<key>NSLocalNetworkUsageDescription</key>
-	<string>Требуется для подключения и синхронизации с другими игроками в локальной сети Wi-Fi</string>
+	<string>Требуется для поиска игровых комнат Monopoly Bank и синхронизации с другими игроками по Wi-Fi.</string>
+	<key>NSBonjourServices</key>
+	<array>
+		<string>_monopoly._tcp</string>
+		<string>_monopoly._udp</string>
+	</array>
+
+	<!-- Разрешение на NFC (обязательно для iOS) -->
 	<key>NFCReaderUsageDescription</key>
-	<string>Требуется для считывания карточек монополии через NFC</string>
+	<string>Требуется для сканирования и покупки карточек предприятий и полей Монополии через NFC метки.</string>
 	<key>com.apple.developer.nfc.readersession.formats</key>
 	<array>
 		<string>NDEF</string>
 		<string>TAG</string>
 	</array>
+	<key>com.apple.developer.nfc.readersession.iso7816.select-identifiers</key>
+	<array>
+		<string>D2760000850101</string>
+	</array>
+
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/appicon.appiconset</string>
 </dict>

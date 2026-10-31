@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MonopolyBank.Views.PopUpCardPicker"
+             BackgroundColor="#80000000">
+
+    <Grid>
+        <Border VerticalOptions="Center"
+                HorizontalOptions="Center"
+                WidthRequest="340"
+                MaximumHeightRequest="620"
+                BackgroundColor="#161824"
+                StrokeShape="{RoundRectangle CornerRadius=22}"
+                Padding="16,14"
+                StrokeThickness="0">
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="4,10" Radius="25" Opacity="0.5"/>
+            </Border.Shadow>
+
+            <Grid RowDefinitions="Auto,Auto,Auto,*,Auto" RowSpacing="10">
+                <!-- Header -->
+                <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                    <VerticalStackLayout Grid.Column="0">
+                        <Label Text="ВЫБОР КАРТОЧКИ / ПОЛЯ"
+                               TextColor="White"
+                               FontSize="16"
+                               FontAttributes="Bold" />
+                        <Label Text="Режим без NFC: выберите действие на доске"
+                               TextColor="#888"
+                               FontSize="11" />
+                    </VerticalStackLayout>
+                    <Button Grid.Column="1"
+                            Text="✕"
+                            TextColor="#999"
+                            BackgroundColor="Transparent"
+                            FontSize="18"
+                            Padding="0"
+                            HeightRequest="32"
+                            WidthRequest="32"
+                            Clicked="OnCloseClicked" />
+                </Grid>
+
+                <!-- Search Entry -->
+                <Border Grid.Row="1"
+                        BackgroundColor="#222533"
+                        StrokeShape="{RoundRectangle CornerRadius=12}"
+                        StrokeThickness="1"
+                        Padding="12,0"
+                        HeightRequest="42">
+                    <Border.Stroke>
+                        <SolidColorBrush Color="#313548" />
+                    </Border.Stroke>
+                    <Entry x:Name="SearchEntry"
+                           Placeholder="Поиск: Улица, Тюрьма, Старт..."
+                           PlaceholderColor="#777"
+                           TextColor="White"
+                           FontSize="14"
+                           TextChanged="OnSearchTextChanged"
+                           VerticalOptions="Center" />
+                </Border>
+
+                <!-- Filter Tabs -->
+                <Grid Grid.Row="2" ColumnDefinitions="*,*,*,*" ColumnSpacing="4">
+                    <Button x:Name="TabAllBtn" Grid.Column="0" Text="Все" FontSize="11" FontAttributes="Bold" TextColor="White" BackgroundColor="#0daaa3" HeightRequest="30" CornerRadius="8" Padding="0" Clicked="OnTabAllClicked" />
+                    <Button x:Name="TabStreetsBtn" Grid.Column="1" Text="Улицы" FontSize="11" FontAttributes="Bold" TextColor="#aaa" BackgroundColor="#222533" HeightRequest="30" CornerRadius="8" Padding="0" Clicked="OnTabStreetsClicked" />
+                    <Button x:Name="TabSpecialBtn" Grid.Column="2" Text="Спецполя" FontSize="11" FontAttributes="Bold" TextColor="#aaa" BackgroundColor="#222533" HeightRequest="30" CornerRadius="8" Padding="0" Clicked="OnTabSpecialClicked" />
+                    <Button x:Name="TabCardsBtn" Grid.Column="3" Text="Шанс" FontSize="11" FontAttributes="Bold" TextColor="#aaa" BackgroundColor="#222533" HeightRequest="30" CornerRadius="8" Padding="0" Clicked="OnTabCardsClicked" />
+                </Grid>
+
+                <!-- Cards Collection -->
+                <CollectionView Grid.Row="3"
+                                x:Name="ItemsCollection"
+                                SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="0,4"
+                                    BackgroundColor="#1c1f2e"
+                                    StrokeShape="{RoundRectangle CornerRadius=12}"
+                                    StrokeThickness="1"
+                                    Padding="10,8">
+                                <Border.Stroke>
+                                    <SolidColorBrush Color="#2c3045" />
+                                </Border.Stroke>
+
+                                <Grid ColumnDefinitions="10,*,Auto" ColumnSpacing="10" VerticalOptions="Center">
+                                    <!-- Color Indicator -->
+                                    <Border Grid.Column="0"
+                                            BackgroundColor="{Binding ColorHex}"
+                                            StrokeShape="{RoundRectangle CornerRadius=4}"
+                                            StrokeThickness="0"
+                                            WidthRequest="8"
+                                            HeightRequest="36"
+                                            VerticalOptions="Center" />
+
+                                    <!-- Main Info -->
+                                    <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                        <Label Text="{Binding Title}"
+                                               TextColor="White"
+                                               FontSize="14"
+                                               FontAttributes="Bold"
+                                               LineBreakMode="TailTruncation" />
+                                        <Label Text="{Binding Subtitle}"
+                                               TextColor="{Binding SubtitleColor}"
+                                               FontSize="11"
+                                               FontAttributes="Bold"
+                                               LineBreakMode="TailTruncation" />
+                                    </VerticalStackLayout>
+
+                                    <!-- Action Button -->
+                                    <Button Grid.Column="2"
+                                            Text="{Binding ButtonText}"
+                                            TextColor="White"
+                                            FontSize="11"
+                                            FontAttributes="Bold"
+                                            BackgroundColor="{Binding ButtonColor}"
+                                            CornerRadius="8"
+                                            HeightRequest="32"
+                                            Padding="10,0"
+                                            VerticalOptions="Center"
+                                            Clicked="OnItemActionClicked"
+                                            CommandParameter="{Binding .}" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- Close Button -->
+                <Button Grid.Row="4"
+                        Text="Закрыть"
+                        TextColor="#aaa"
+                        BackgroundColor="#222533"
+                        FontSize="13"
+                        FontAttributes="Bold"
+                        HeightRequest="38"
+                        CornerRadius="10"
+                        Clicked="OnCloseClicked" />
+            </Grid>
+        </Border>
+    </Grid>
+
+</ContentPage>

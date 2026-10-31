@@ -19,6 +19,13 @@ namespace MonopolyBank.Views
                 BtnStartTrade.IsVisible = false;
             }
 
+            // Хост может начислить зарплату за круг любому игроку
+            if (GameManager.Instance.IsHost)
+            {
+                BtnPaySalary.IsVisible = true;
+                BtnPaySalary.Text = $"💰 Выдать зарплату (+{GameManager.Instance.CountStartSum} $)";
+            }
+
             Background = Colors.Transparent;
             if (Content != null) Content.TranslationY = 800;
             Loaded += Page_Loaded;
@@ -117,6 +124,18 @@ namespace MonopolyBank.Views
                 System.Diagnostics.Debug.WriteLine($"[StartTrade Error] {ex.Message}");
                 BtnStartTrade.IsEnabled = true;
             }
+        }
+
+        private async void OnPaySalaryClicked(object sender, EventArgs e)
+        {
+            if (_targetUser.isGameOver) return;
+
+            int bonus = GameManager.Instance.CountStartSum;
+            await GameManager.Instance.UpdateBalanceAsync(_targetUser.Id, _targetUser.Cash + bonus, "Зарплата за круг (Хост)");
+            _ = SoundService.Instance.PlaySoundAsync("coindrop");
+            await GameManager.Instance.AddHistoryAsync($"Хост выдал игроку {_targetUser.Name} зарплату за круг (+{bonus}$)", "payment.png", bonus, true);
+
+            await CloseAsync();
         }
 
         private async void OnBackdropTapped(object sender, TappedEventArgs e)
